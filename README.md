@@ -19,8 +19,8 @@ See https://itch.io/jam/game-off-2020 and https://github.com/geka32team/moonshot
 
 Or on Windows cmd:
 
-    $ py -3 -m venv venv
-    $ .venv\Scripts\activate.bat
+    > py -3 -m venv venv
+    > .venv\Scripts\activate.bat
 
 ### Install requirements
 
