@@ -2,6 +2,7 @@ import os
 import tempfile
 
 import pytest
+from flask.testing import FlaskClient
 
 from src import create_app
 from src.db import init_db, get_db
@@ -32,9 +33,16 @@ def app():
     os.unlink(db_path)
 
 
+class APIFlaskClient(FlaskClient):
+    def open(self, *args, **kwargs):
+        kwargs.setdefault('content_type', 'application/json')
+        return super().open(*args, **kwargs)
+
+
 @pytest.fixture
-def client(app):
-    """A test client for the app."""
+def api_client(app):
+    """A test client for the JSON API."""
+    app.test_client_class = APIFlaskClient
     return app.test_client()
 
 
