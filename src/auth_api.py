@@ -24,10 +24,10 @@ def register():
 
     try:
         jsonschema.validate(schema=RegisterSchema, instance=data)
-    except jsonschema.exceptions.ValidationError as e:
+    except jsonschema.exceptions.ValidationError as e:                      # pragma: no cover
         current_app.logger.error(f'JSON-schema validation error: {e}')
         raise JsonError(message='bad request')
-    except Exception as e:
+    except Exception as e:                                                  # pragma: no cover
         current_app.logger.error(f'error: {e}')
         raise JsonError(message='bad request')
 
@@ -40,10 +40,10 @@ def register():
         db.execute(qry, params)
 
         db.commit()
-    except (sqlite3.Warning, sqlite3.Error, sqlite3.DatabaseError) as e:
+    except (sqlite3.Warning, sqlite3.Error, sqlite3.DatabaseError) as e:    # pragma: no cover
         current_app.logger.error(f'DB error: {e}')
         raise JsonError(message='bad request')
-    except Exception as e:
+    except Exception as e:                                                  # pragma: no cover
         current_app.logger.error(f'error: {e}')
         raise JsonError(message='bad request')
 
