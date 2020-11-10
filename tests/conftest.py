@@ -33,6 +33,12 @@ def app():
     os.unlink(db_path)
 
 
+@pytest.fixture
+def client(app):
+    """A test client for the app."""
+    return app.test_client()
+
+
 class APIFlaskClient(FlaskClient):
     def open(self, *args, **kwargs):
         kwargs.setdefault('content_type', 'application/json')
