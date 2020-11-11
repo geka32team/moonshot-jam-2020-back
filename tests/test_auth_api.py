@@ -30,8 +30,8 @@ def test_register_if_normal_request_works(api_client, app, data):
         assert get_db().execute(
             'SELECT * '
               'FROM users '
-             'WHERE username = ?',
-            (data['username'],)
+             'WHERE username = ? AND ip_address = ?',
+            (data['username'], '127.0.0.1')
         ).fetchone() is not None
 
 

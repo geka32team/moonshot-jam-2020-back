@@ -36,7 +36,8 @@ def register():
     try:
         qry = ("INSERT INTO users (username, password, ip_address, created_at) "
                "VALUES (?, ?, ?, datetime('now'))")
-        params = (data['username'], generate_password_hash(data['password']), 'ip')
+        params = (data['username'], generate_password_hash(data['password']),
+                  request.remote_addr)
         db.execute(qry, params)
 
         db.commit()
