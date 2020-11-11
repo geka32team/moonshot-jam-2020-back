@@ -4,6 +4,9 @@ API for Moonshot Jam 2020 project.
 
 See https://itch.io/jam/game-off-2020 and https://github.com/geka32team/moonshot-jam-2020-front
 
+## Docs
+
+See [Wiki](https://github.com/geka32team/moonshot-jam-2020-back/wiki)
 
 ## Install
 
