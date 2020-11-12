@@ -49,3 +49,8 @@ def register():
         raise JsonError(message='bad request')
 
     return json_response()
+
+
+@bp.route("/signin", methods=["POST"])
+def signin():
+    return json_response()
