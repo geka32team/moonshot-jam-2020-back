@@ -7,8 +7,14 @@ from src.jsonschema.response.error import ErrorSchema
 from src.db import get_db
 
 
-def test_register_if_only_POST_is_allowed(api_client, app):
-    assert api_client.get('/api/register').status_code == 405
+@pytest.mark.parametrize('endpoint,methods', (
+    ('/api/register', {'POST'}),
+    ('/api/signin', {'POST'})
+))
+def test_if_http_method_is_allowed(api_client, app, endpoint, methods):
+    all_methods = {'GET', 'POST', 'PUT', 'DELETE', 'CONNECT', 'TRACE', 'PATCH'}
+    for method in all_methods - methods:
+        assert api_client.open(endpoint, method=method).status_code == 405
 
 
 @pytest.mark.parametrize('data', (
@@ -60,3 +66,18 @@ def test_register_if_wrong_data_rejected(api_client, app, data, is_duplicate):
                 'WHERE username = ?',
                 (data.get('username', None),),
             ).fetchone() is None
+
+
+@pytest.mark.parametrize('data', (
+    #  {'username': 'test_user_123', 'password': 'secREt_#23'},
+    #  {'username': 'test_user_124', 'password': 'sEcret_123'},
+    {'username': 'test', 'password': 'test'}
+))
+def test_signin_if_normal_request_works(api_client, app, data):
+    response = api_client.post(
+        '/api/signin', data=json.dumps(data)
+    )
+
+    assert response.status_code == 200
+
+    validate(schema=ResponseSchema, instance=response.get_json())
