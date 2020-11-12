@@ -31,18 +31,18 @@ def test_register_if_normal_request_works(api_client, app, data):
             'SELECT * '
               'FROM users '
              'WHERE username = ? AND ip_address = ?',
-            (data['username'], '127.0.0.1')
+            (data.get('username'), '127.0.0.1')
         ).fetchone() is not None
 
 
-@pytest.mark.parametrize('data', (
-    {'username': 'test', 'password': 'secREt_#23'},    # duplicate
-    {},
-    {'username': 'test_user_124'},
-    {'password': 'secet_123'},
-    {'username': 'test_user_222', 'password': 'secREt_#23', 'addon': 55},
+@pytest.mark.parametrize('data,is_duplicate', (
+    ({'username': 'test', 'password': 'secREt_#23'}, True),
+    ({}, False),
+    ({'username': 'test_user_124'}, False),
+    ({'password': 'secet_123'}, False),
+    ({'username': 'test_user_222', 'password': 'secREt_#23', 'addon': 55}, False)
 ))
-def test_register_if_wrong_data_rejected(api_client, app, data):
+def test_register_if_wrong_data_rejected(api_client, app, data, is_duplicate):
     response = api_client.post(
         '/api/register', data=json.dumps(data)
     )
@@ -50,3 +50,13 @@ def test_register_if_wrong_data_rejected(api_client, app, data):
     assert response.status_code == 400
 
     validate(schema=ErrorSchema, instance=response.get_json())
+
+    if not is_duplicate:
+        # check if record has not been added
+        with app.app_context():
+            assert get_db().execute(
+                'SELECT * '
+                'FROM users '
+                'WHERE username = ?',
+                (data.get('username', None),),
+            ).fetchone() is None
