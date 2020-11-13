@@ -1,4 +1,13 @@
+[BASIC]
+
+good-names=
+    e,
+    db,
+
+
 [MESSAGES CONTROL]
+
 disable=
- missing-module-docstring,
- missing-function-docstring
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,

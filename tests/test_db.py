@@ -1,3 +1,5 @@
+# pylint: disable=too-few-public-methods
+
 import sqlite3
 
 import pytest
