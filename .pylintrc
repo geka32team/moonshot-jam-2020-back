@@ -2,6 +2,7 @@
 
 good-names=
     e,
+    f,
     db,
 
 
@@ -11,3 +12,4 @@ disable=
     missing-module-docstring,
     missing-class-docstring,
     missing-function-docstring,
+    duplicate-code,

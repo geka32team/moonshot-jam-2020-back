@@ -1,8 +1,9 @@
-from flask import Blueprint, url_for, request, current_app, session
+import sqlite3
+
+from flask import Blueprint, request, current_app, session
 from flask_json import json_response, JsonError
 from werkzeug.security import check_password_hash, generate_password_hash
 import jsonschema
-import sqlite3
 
 from src.jsonschema.request.register import RegisterSchema
 from src.jsonschema.request.signin import SigninSchema
@@ -27,10 +28,10 @@ def register():
         jsonschema.validate(schema=RegisterSchema, instance=data)
     except jsonschema.exceptions.ValidationError as e:                      # pragma: no cover
         current_app.logger.error(f'JSON-schema validation error: {e}')
-        raise JsonError(message='bad request')
+        raise JsonError(message='bad request') from e
     except Exception as e:                                                  # pragma: no cover
         current_app.logger.error(f'error: {e}')
-        raise JsonError(message='bad request')
+        raise JsonError(message='bad request') from e
 
     db = get_db()
 
@@ -44,10 +45,10 @@ def register():
         db.commit()
     except (sqlite3.Warning, sqlite3.Error, sqlite3.DatabaseError) as e:    # pragma: no cover
         current_app.logger.error(f'DB error: {e}')
-        raise JsonError(message='bad request')
+        raise JsonError(message='bad request') from e
     except Exception as e:                                                  # pragma: no cover
         current_app.logger.error(f'error: {e}')
-        raise JsonError(message='bad request')
+        raise JsonError(message='bad request') from e
 
     return json_response()
 
@@ -61,10 +62,10 @@ def signin():
         jsonschema.validate(schema=SigninSchema, instance=data)
     except jsonschema.exceptions.ValidationError as e:                      # pragma: no cover
         current_app.logger.error(f'JSON-schema validation error: {e}')
-        raise JsonError(message='bad request')
+        raise JsonError(message='bad request') from e
     except Exception as e:                                                  # pragma: no cover
         current_app.logger.error(f'error: {e}')
-        raise JsonError(message='bad request')
+        raise JsonError(message='bad request') from e
 
     db = get_db()
 
@@ -78,16 +79,17 @@ def signin():
         user = db.execute(qry, params).fetchone()
     except (sqlite3.Warning, sqlite3.Error, sqlite3.DatabaseError) as e:    # pragma: no cover
         current_app.logger.error(f'DB error: {e}')
-        raise JsonError(message='bad request')
+        raise JsonError(message='bad request') from e
     except Exception as e:                                                  # pragma: no cover
         current_app.logger.error(f'error: {e}')
-        raise JsonError(message='bad request')
+        raise JsonError(message='bad request') from e
 
     if user is None:
         current_app.logger.error(
             f"AUTH error: user \"{data['username']}\": not registered")
         raise JsonError(401, message='bad request')
-    elif not check_password_hash(user['password'], data['password']):
+
+    if not check_password_hash(user['password'], data['password']):
         current_app.logger.error(
             f"AUTH error: user \"{data['username']}\": wrong password")
         raise JsonError(401, message='bad request')

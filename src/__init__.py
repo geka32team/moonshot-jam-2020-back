@@ -3,6 +3,8 @@ import os
 from flask import Flask
 from flask_json import FlaskJSON
 
+from . import db
+from . import auth_api
 
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
@@ -32,13 +34,9 @@ def create_app(test_config=None):
         pass
 
     # register the database commands
-    from . import db
-
     db.init_app(app)
 
     # apply the blueprints to the app
-    from . import auth_api
-
     app.register_blueprint(auth_api.bp)
 
     # make url_for('index') == url_for('blog.index')

@@ -5,7 +5,7 @@ ErrorSchema = {
     'properties': {
         'status': {
             'type': 'integer',
-            'minimum': 100,
+            'minimum': 400,
             'maximum': 699
         },
         'message': {
