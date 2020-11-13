@@ -22,7 +22,7 @@ See [Wiki](https://github.com/geka32team/moonshot-jam-2020-back/wiki)
 
 Or on Windows cmd:
 
-    > py -3 -m venv venv
+    > py -3 -m venv .venv
     > .venv\Scripts\activate.bat
 
 ### Install requirements
