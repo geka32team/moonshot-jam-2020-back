@@ -5,9 +5,8 @@ from flask_json import json_response, JsonError
 from werkzeug.security import check_password_hash
 import jsonschema
 
-from src.jsonschema.request.signin import SigninSchema
-
 from ..db import get_db
+from ..jsonschema.request.signin import SigninSchema as JSONSchema
 
 
 bp = Blueprint("api.signin", __name__, url_prefix="/api")
@@ -19,7 +18,7 @@ def signin():
     data = request.get_json()
 
     try:
-        jsonschema.validate(schema=SigninSchema, instance=data)
+        jsonschema.validate(schema=JSONSchema, instance=data)
     except jsonschema.exceptions.ValidationError as e:                      # pragma: no cover
         current_app.logger.error(f'JSON-schema validation error: {e}')
         raise JsonError(message='bad request') from e

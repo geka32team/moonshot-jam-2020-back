@@ -3,11 +3,12 @@ import sqlite3
 from flask import Blueprint, request, current_app
 from flask_json import json_response, JsonError
 from werkzeug.security import generate_password_hash
+from marshmallow import ValidationError
 import jsonschema
 
-from src.jsonschema.request.register import RegisterSchema
-
 from ..db import get_db
+from ..jsonschema.request.register import RegisterSchema as JSONSchema
+from ..validator.api.register import RegisterSchema as ValidationScheama
 
 
 bp = Blueprint("api.register", __name__, url_prefix="/api")
@@ -24,12 +25,18 @@ def register():
     data = request.get_json()
 
     try:
-        jsonschema.validate(schema=RegisterSchema, instance=data)
+        jsonschema.validate(schema=JSONSchema, instance=data)
     except jsonschema.exceptions.ValidationError as e:                      # pragma: no cover
         current_app.logger.error(f'JSON-schema validation error: {e}')
         raise JsonError(message='bad request') from e
     except Exception as e:                                                  # pragma: no cover
         current_app.logger.error(f'error: {e}')
+        raise JsonError(message='bad request') from e
+
+    try:
+        ValidationScheama().load(data)
+    except ValidationError as e:
+        current_app.logger.error(f'validation error: {e}')
         raise JsonError(message='bad request') from e
 
     db = get_db()

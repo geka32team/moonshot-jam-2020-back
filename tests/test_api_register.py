@@ -44,7 +44,7 @@ def test_register_if_normal_request_works(api_client, app, data):
     ({'username': 'test333 ', 'password': 'secREt_#23'}, False),
     ({'username': 'test333\t', 'password': 'secREt_#23'}, False),
     ({'username': 'test333\r', 'password': 'secREt_#23'}, False),
-    #  ({'username': 'test333\n', 'password': 'secREt_#23'}, False),
+    ({'username': 'test333\n', 'password': 'secREt_#23'}, False),
     ({}, False),
     ({'username': 'test_user_124'}, False),
     ({'password': 'secet_123'}, False),
