@@ -1,0 +1,40 @@
+{
+  "files": {
+    "main.css": "/static/css/main.6d6e9b54.chunk.css",
+    "main.js": "/static/js/main.51ea0c54.chunk.js",
+    "main.js.map": "/static/js/main.51ea0c54.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.16dd4f44.js",
+    "runtime-main.js.map": "/static/js/runtime-main.16dd4f44.js.map",
+    "static/js/2.24cc6122.chunk.js": "/static/js/2.24cc6122.chunk.js",
+    "static/js/2.24cc6122.chunk.js.map": "/static/js/2.24cc6122.chunk.js.map",
+    "static/js/3.cf439f62.chunk.js": "/static/js/3.cf439f62.chunk.js",
+    "static/js/3.cf439f62.chunk.js.map": "/static/js/3.cf439f62.chunk.js.map",
+    "static/js/4.6e181e35.chunk.js": "/static/js/4.6e181e35.chunk.js",
+    "static/js/4.6e181e35.chunk.js.map": "/static/js/4.6e181e35.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.6d6e9b54.chunk.css.map": "/static/css/main.6d6e9b54.chunk.css.map",
+    "static/js/2.24cc6122.chunk.js.LICENSE.txt": "/static/js/2.24cc6122.chunk.js.LICENSE.txt",
+    "static/js/3.cf439f62.chunk.js.LICENSE.txt": "/static/js/3.cf439f62.chunk.js.LICENSE.txt",
+    "static/media/armor.d0e187bc.png": "/static/media/armor.d0e187bc.png",
+    "static/media/bag.56eec9aa.png": "/static/media/bag.56eec9aa.png",
+    "static/media/boots.41ae0b31.png": "/static/media/boots.41ae0b31.png",
+    "static/media/boss.be051bd8.jpeg": "/static/media/boss.be051bd8.jpeg",
+    "static/media/bot.b9993e01.jpeg": "/static/media/bot.b9993e01.jpeg",
+    "static/media/duel.5db79a89.png": "/static/media/duel.5db79a89.png",
+    "static/media/gloves.7cd56470.png": "/static/media/gloves.7cd56470.png",
+    "static/media/helm.96c9fe99.png": "/static/media/helm.96c9fe99.png",
+    "static/media/main.97f36b0b.png": "/static/media/main.97f36b0b.png",
+    "static/media/main2.c99f9630.png": "/static/media/main2.c99f9630.png",
+    "static/media/App.css": "/static/media/moon-surface.2ac524fe.jpg",
+    "static/media/moon.34afc866.png": "/static/media/moon.34afc866.png",
+    "static/media/moon_sound.11369329.wav": "/static/media/moon_sound.11369329.wav",
+    "static/media/weapon.1c3e4ecd.png": "/static/media/weapon.1c3e4ecd.png",
+    "static/media/weapon1.7c4b5908.png": "/static/media/weapon1.7c4b5908.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.16dd4f44.js",
+    "static/js/2.24cc6122.chunk.js",
+    "static/css/main.6d6e9b54.chunk.css",
+    "static/js/main.51ea0c54.chunk.js"
+  ]
+}
