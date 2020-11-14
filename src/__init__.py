@@ -3,8 +3,8 @@ import os
 from flask import Flask
 from flask_json import FlaskJSON
 
+from . import blueprint
 from . import db
-from . import auth_api
 
 
 def create_app(test_config=None):
@@ -38,7 +38,7 @@ def create_app(test_config=None):
     db.init_app(app)
 
     # apply the blueprints to the app
-    app.register_blueprint(auth_api.bp)
+    blueprint.register_all(app)
 
     # make url_for('index') == url_for('blog.index')
     # in another app, you might define a separate main index here with

@@ -12,6 +12,9 @@ from src.db import get_db
     {'username': 'test_user_123', 'password': 'secREt_#23'},
     {'username': 'test_user_124', 'password': 'sEcret_123'},
     {'username': 'test_12a3', 'password': 'secet_123'},
+    {'username': 'Жtest_12a3', 'password': 'secet_123'},
+    {'username': 'test_12a3Ж', 'password': 'secet_123'},
+    {'username': '3 test_12a3', 'password': 'secet_123'},
 ))
 def test_register_if_normal_request_works(api_client, app, data):
     response = api_client.post(
@@ -34,6 +37,14 @@ def test_register_if_normal_request_works(api_client, app, data):
 
 @pytest.mark.parametrize('data,is_duplicate', (
     ({'username': 'test', 'password': 'secREt_#23'}, True),
+    ({'username': ' test333', 'password': 'secREt_#23'}, False),
+    ({'username': '\ttest333', 'password': 'secREt_#23'}, False),
+    ({'username': '\rtest333', 'password': 'secREt_#23'}, False),
+    ({'username': '\ntest333', 'password': 'secREt_#23'}, False),
+    ({'username': 'test333 ', 'password': 'secREt_#23'}, False),
+    ({'username': 'test333\t', 'password': 'secREt_#23'}, False),
+    ({'username': 'test333\r', 'password': 'secREt_#23'}, False),
+    #  ({'username': 'test333\n', 'password': 'secREt_#23'}, False),
     ({}, False),
     ({'username': 'test_user_124'}, False),
     ({'password': 'secet_123'}, False),

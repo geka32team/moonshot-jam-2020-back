@@ -6,7 +6,8 @@ RegisterSchema = {
         'username': {
             'type': 'string',
             'minLength': 4,
-            'maxLength': 15
+            'maxLength': 15,
+            'pattern': '^\\S.+\\S$',
         },
         'password': {
             'type': 'string',
