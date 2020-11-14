@@ -9,7 +9,7 @@ from . import auth_api
 
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True, static_folder='../static')
 
     json = FlaskJSON()
     json.init_app(app)
