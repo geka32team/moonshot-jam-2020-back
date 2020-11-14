@@ -19,10 +19,10 @@ def signin():
 
     try:
         jsonschema.validate(schema=JSONSchema, instance=data)
-    except jsonschema.exceptions.ValidationError as e:                      # pragma: no cover
+    except jsonschema.exceptions.ValidationError as e:  # pragma: no cover
         current_app.logger.error(f'JSON-schema validation error: {e}')
         raise JsonError(message='bad request') from e
-    except Exception as e:                                                  # pragma: no cover
+    except Exception as e:                              # pragma: no cover
         current_app.logger.error(f'error: {e}')
         raise JsonError(message='bad request') from e
 
@@ -36,10 +36,11 @@ def signin():
         params = (data['username'],)
 
         user = db.execute(qry, params).fetchone()
-    except (sqlite3.Warning, sqlite3.Error, sqlite3.DatabaseError) as e:    # pragma: no cover
+    except (sqlite3.Warning, sqlite3.Error,
+            sqlite3.DatabaseError) as e:                # pragma: no cover
         current_app.logger.error(f'DB error: {e}')
         raise JsonError(message='bad request') from e
-    except Exception as e:                                                  # pragma: no cover
+    except Exception as e:                              # pragma: no cover
         current_app.logger.error(f'error: {e}')
         raise JsonError(message='bad request') from e
 

@@ -19,7 +19,10 @@ def test_signin_if_normal_request_works(api_client, data):
     validate(schema=ResponseSchema, instance=response.get_json())
 
     cookie = next(
-        (cookie for cookie in api_client.cookie_jar if cookie.name == "session"),
+        (cookie
+            for cookie
+            in api_client.cookie_jar
+            if cookie.name == "session"),
         None
     )
 
@@ -30,7 +33,8 @@ def test_signin_if_normal_request_works(api_client, data):
     ({}, 400),
     ({'username': 'test_user_124'}, 400),
     ({'password': 'secet_123'}, 400),
-    ({'username': 'test_user_222', 'password': 'secREt_#23', 'addon': 55}, 400),
+    ({'username': 'test_user_222', 'password': 'secREt_#23',
+      'addon': 55}, 400),
     ({'username': 'test1', 'password': 'secREt_#23'}, 401),
     ({'username': 'test', 'password': 'secREt_#23'}, 401),
 ))
@@ -44,7 +48,10 @@ def test_signin_if_wrong_attempt_rejected(api_client, data, response_code):
     validate(schema=ResponseSchema, instance=response.get_json())
 
     cookie = next(
-        (cookie for cookie in api_client.cookie_jar if cookie.name == "session"),
+        (cookie
+            for cookie
+            in api_client.cookie_jar
+            if cookie.name == "session"),
         None
     )
 
