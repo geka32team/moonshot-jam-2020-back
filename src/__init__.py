@@ -2,6 +2,7 @@ import os
 
 from flask import Flask
 from flask_json import FlaskJSON
+from flask_cors import CORS
 
 from . import blueprint
 from . import db
@@ -15,6 +16,8 @@ def create_app(test_config=None):
 
     json = FlaskJSON()
     json.init_app(app)
+
+    CORS(app)
 
     app.config.from_mapping(
         # a default secret that should be overridden by instance config
