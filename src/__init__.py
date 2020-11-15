@@ -5,6 +5,7 @@ from flask_json import FlaskJSON
 
 from . import blueprint
 from . import db
+from . import auth
 
 
 def create_app(test_config=None):
