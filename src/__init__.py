@@ -36,6 +36,9 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    # init and register authentication halpers
+    auth.init_app(app)
+
     # register the database commands
     db.init_app(app)
 

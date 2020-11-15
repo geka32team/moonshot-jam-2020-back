@@ -2,11 +2,9 @@ import functools
 from flask import current_app, session, g
 from flask_json import JsonError
 
-from .api.signin import bp
 from .db import get_db
 
 
-@bp.before_app_request
 def load_signed_in_user():
     """If a user id is stored in the session, load the user object from
     the database into ``g.user``."""
@@ -33,3 +31,7 @@ def signin_required(view):
         return view(**kwargs)
 
     return wrapped_view
+
+
+def init_app(app):
+    app.before_request(load_signed_in_user)
