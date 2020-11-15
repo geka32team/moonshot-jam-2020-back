@@ -1,17 +1,16 @@
 import json
-
 import pytest
 from jsonschema import validate
 
 from src.jsonschema.response.response import ResponseSchema
 
 
-def test_signout_if_normal_request_works(api_client):
+def test_signout_unauthenticated(api_client):
     response = api_client.post(
         '/api/signout'
     )
 
-    assert response.status_code == 200
+    assert response.status_code == 401
 
     validate(schema=ResponseSchema, instance=response.get_json())
 
