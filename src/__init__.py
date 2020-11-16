@@ -20,7 +20,7 @@ def create_app(test_config=None):
     FlaskJSON(app)
     CORS(app)
 
-    socketio_logger = bool(strtobool(os.getenv("SOCKETIO_LOGGER", False)))
+    socketio_logger = bool(strtobool(os.getenv("SOCKETIO_LOGGER", "False")))
     socketio = SocketIO(app, engineio_logger=socketio_logger)
 
     app.config.from_mapping(
