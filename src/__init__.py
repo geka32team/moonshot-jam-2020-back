@@ -1,12 +1,15 @@
 import os
+from distutils.util import strtobool
 
 from flask import Flask
 from flask_json import FlaskJSON
 from flask_cors import CORS
+from flask_socketio import SocketIO
 
-from . import blueprint
+from . import api
 from . import db
 from . import auth
+from . import ws
 
 
 def create_app(test_config=None):
@@ -14,10 +17,11 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True,
                 static_folder='../static')
 
-    json = FlaskJSON()
-    json.init_app(app)
-
+    FlaskJSON(app)
     CORS(app)
+
+    socketio_logger = bool(strtobool(os.getenv("SOCKETIO_LOGGER", False)))
+    socketio = SocketIO(app, engineio_logger=socketio_logger)
 
     app.config.from_mapping(
         # a default secret that should be overridden by instance config
@@ -39,14 +43,17 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # init and register authentication halpers
-    auth.init_app(app)
-
     # register the database commands
     db.init_app(app)
 
-    # apply the blueprints to the app
-    blueprint.register_all(app)
+    # init and register authentication helpers
+    auth.init_app(app)
+
+    # api handlers
+    api.register_all(app)
+
+    # websockets handlers
+    ws.register_all(socketio)
 
     # make url_for('index') == url_for('blog.index')
     # in another app, you might define a separate main index here with
