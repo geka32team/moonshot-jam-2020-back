@@ -36,6 +36,12 @@ def app():
 
 
 @pytest.fixture
+def runner(app):
+    """A test runner for the app's Click commands."""
+    return app.test_cli_runner()
+
+
+@pytest.fixture
 def client(app):
     """A test client for the app."""
     return app.test_client()
@@ -48,13 +54,28 @@ class APIFlaskClient(FlaskClient):
 
 
 @pytest.fixture
-def api_client(app):
-    """A test client for the JSON API."""
+def api_client_unauth(app):
+    """An unauthenticated test client for the JSON API."""
     app.test_client_class = APIFlaskClient
     return app.test_client()
 
 
 @pytest.fixture
-def runner(app):
-    """A test runner for the app's Click commands."""
-    return app.test_cli_runner()
+def api_client(api_client_unauth):
+    """A authenticated test client for the JSON API."""
+    data = {'username': 'test',
+            'password': 'password'},
+    response = api_client_unauth.post(
+        '/api/signin', data=json.dumps(data)
+    )
+
+    assert response.status_code == 200
+
+    return api_client_unauth
+
+
+@pytest.fixture
+def ws_client_public(app):
+    """A test client for the socketio API."""
+    socketio = app.extensions.get('socketio')
+    return socketio.test_client(app)

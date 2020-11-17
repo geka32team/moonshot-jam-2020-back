@@ -9,8 +9,8 @@ from src.jsonschema.response.response import ResponseSchema
 @pytest.mark.parametrize('data', (
     {'username': 'test', 'password': 'password'},
 ))
-def test_signin_if_normal_request_works(api_client, data):
-    response = api_client.post(
+def test_signin_if_normal_request_works(api_client_unauth, data):
+    response = api_client_unauth.post(
         '/api/signin', data=json.dumps(data)
     )
 
@@ -21,7 +21,7 @@ def test_signin_if_normal_request_works(api_client, data):
     cookie = next(
         (cookie
             for cookie
-            in api_client.cookie_jar
+            in api_client_unauth.cookie_jar
             if cookie.name == "session"),
         None
     )
@@ -38,8 +38,8 @@ def test_signin_if_normal_request_works(api_client, data):
     ({'username': 'test1', 'password': 'secREt_#23'}, 401),
     ({'username': 'test', 'password': 'secREt_#23'}, 401),
 ))
-def test_signin_if_wrong_attempt_rejected(api_client, data, response_code):
-    response = api_client.post(
+def test_signin_if_wrong_attempt_rejected(api_client_unauth, data, response_code):
+    response = api_client_unauth.post(
         '/api/signin', data=json.dumps(data)
     )
 
@@ -50,7 +50,7 @@ def test_signin_if_wrong_attempt_rejected(api_client, data, response_code):
     cookie = next(
         (cookie
             for cookie
-            in api_client.cookie_jar
+            in api_client_unauth.cookie_jar
             if cookie.name == "session"),
         None
     )

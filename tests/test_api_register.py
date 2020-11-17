@@ -16,8 +16,8 @@ from src.db import get_db
     {'username': 'test_12a3Ж', 'password': 'secet_123'},
     {'username': '3 test_12a3', 'password': 'secet_123'},
 ))
-def test_register_if_normal_request_works(api_client, app, data):
-    response = api_client.post(
+def test_register_if_normal_request_works(api_client_unauth, app, data):
+    response = api_client_unauth.post(
         '/api/register', data=json.dumps(data)
     )
 
@@ -51,8 +51,8 @@ def test_register_if_normal_request_works(api_client, app, data):
     ({'username': 'test_user_222', 'password': 'secREt_#23',
       'addon': 55}, False),
 ))
-def test_register_if_wrong_data_rejected(api_client, app, data, is_duplicate):
-    response = api_client.post(
+def test_register_if_wrong_data_rejected(api_client_unauth, app, data, is_duplicate):
+    response = api_client_unauth.post(
         '/api/register', data=json.dumps(data)
     )
 

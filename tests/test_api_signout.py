@@ -5,8 +5,8 @@ from jsonschema import validate
 from src.jsonschema.response.response import ResponseSchema
 
 
-def test_signout_unauthenticated(api_client):
-    response = api_client.post(
+def test_signout_unauthenticated(api_client_unauth):
+    response = api_client_unauth.post(
         '/api/signout'
     )
 
@@ -17,7 +17,7 @@ def test_signout_unauthenticated(api_client):
     cookie = next(
         (cookie
             for cookie
-            in api_client.cookie_jar
+            in api_client_unauth.cookie_jar
             if cookie.name == "session"),
         None
     )
@@ -39,10 +39,10 @@ def test_signout_unauthenticated(api_client):
          'session_exists': False},
     ),
 ))
-def test_signout_scenarios(api_client, scenario):
+def test_signout_scenarios(api_client_unauth, scenario):
     for step in scenario:
         data = json.dumps(step['data']) if step['data'] else None
-        response = api_client.post(
+        response = api_client_unauth.post(
             step['endpoint'], data=data
         )
 
@@ -53,7 +53,7 @@ def test_signout_scenarios(api_client, scenario):
         cookie = next(
             (cookie
                 for cookie
-                in api_client.cookie_jar
+                in api_client_unauth.cookie_jar
                 if cookie.name == "session"),
             None
         )
