@@ -4,6 +4,7 @@ from . import (
     signout,
 )
 
+
 def register_all(app):
     app.register_blueprint(register.bp)
     app.register_blueprint(signin.bp)
