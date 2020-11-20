@@ -13,3 +13,4 @@ def register_all(app):
     app.on_event('connect', public_connect.handler, namespace=ns.PUBLIC)
 
     app.on_event('connect', api_connect.handler, namespace=ns.API)
+    app.on_event('echo', echo.handler, namespace=ns.API)

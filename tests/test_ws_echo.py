@@ -1,9 +1,15 @@
+from jsonschema import validate
+
 from src.ws.namespace import Namespace as ns
+from src.jsonschema.response.ws.echo import EchoSchema as JSONSchema
 
 
-def test_echo(caplog, ws_client):
+def test_echo(ws_client):
     ws_client.connect(ns.API)
 
-    ret = ws_client.emit('echo', 'hello', namespace=ns.API, callback=True)
+    msg = {'msg': 'hello'}
+    ret = ws_client.emit('echo', msg, namespace=ns.API, json=True, callback=True)
 
-    assert 'echo: hello' in ret
+    validate(schema=JSONSchema, instance=ret)
+
+    assert ret['msg'] == msg

@@ -1,19 +1,27 @@
-#  from flask_socketio import emit, send
-
-#  from flask import Blueprint, request, current_app, session
 from flask import current_app
+import jsonschema
+
+from ..jsonschema.request.ws.echo import EchoSchema as JSONSchema
+
+
+#  from flask_socketio import emit, send
+#  from flask import Blueprint, request, current_app, session
 #  from flask_json import json_response, JsonError
 #
-#  from ..auth import signin_required
-#
-#  bp = Blueprint("ws.ping", __name__, url_prefix="/ws")
-#
 
 
-def handler(message):
-    current_app.logger.debug(
-        f"on_message: '{message}'")
-    return "echo: " + message
+def handler(msg):
+    try:
+        jsonschema.validate(schema=JSONSchema, instance=msg)
+    except jsonschema.exceptions.ValidationError as e:      # pragma: no cover
+        current_app.logger.error(f'JSON-schema validation error: {e}')
+        return None
+    except Exception as e:                                  # pragma: no cover
+        current_app.logger.error(f'error: {e}')
+        return None
+
+    current_app.logger.debug(f"msg: {msg}")
+    return {'msg': msg}
 
 
 #  @socketio.on('message')
