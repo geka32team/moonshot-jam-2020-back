@@ -44,8 +44,10 @@ def ws_auth_required(handler):
         if user_id is None:
             current_app.logger.debug("unauthorized")
             disconnect()
-        else:
-            return handler(*args, **kwargs)
+
+            return None
+
+        return handler(*args, **kwargs)
 
     return wrapped
 
