@@ -37,7 +37,7 @@ def signin_required(view):
 def ws_auth_required(handler):
     """Decorator that checks if socketio client is authenticated."""
 
-    @functools.wraps(handler)
+    @functools.wraps(handler)   # pragma: no cover
     def wrapped(*args, **kwargs):
         user_id = session.get("user_id")
 
@@ -49,7 +49,7 @@ def ws_auth_required(handler):
 
         return handler(*args, **kwargs)
 
-    return wrapped
+    return wrapped              # pragma: no cover
 
 
 def init_app(app):
