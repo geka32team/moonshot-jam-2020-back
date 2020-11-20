@@ -1,5 +1,3 @@
-import logging
-
 from src.ws.namespace import Namespace as ns
 
 
@@ -11,13 +9,11 @@ def test_connect_unauth(caplog, ws_client_unauth):
 
     ret = ws_client_unauth.send('test_connect_unauth', namespace=ns.API, callback=True)
 
-    assert 'is not connected to namespace /api' in caplog.text
+    assert f'is not connected to namespace {ns.API}' in caplog.text
 
 
 def test_connect(caplog, ws_client):
     """Test if ns.API namespace is unavailable"""
-
-    caplog.set_level(logging.DEBUG)
 
     assert not ws_client.is_connected(ns.API)
 
@@ -25,4 +21,4 @@ def test_connect(caplog, ws_client):
 
     assert ws_client.is_connected(ns.API)
 
-    assert "user 'test' has connected '/api'" in caplog.text
+    assert f"connect '{ns.API}', user: 'test'" in caplog.text
