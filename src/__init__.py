@@ -18,7 +18,7 @@ def create_app(test_config=None):
                 static_folder='../static')
 
     FlaskJSON(app)
-    CORS(app)
+    CORS(app, supports_credentials=True)
 
     socketio_logger = bool(strtobool(os.getenv("SOCKETIO_LOGGER", "False")))
     socketio = SocketIO(app,
