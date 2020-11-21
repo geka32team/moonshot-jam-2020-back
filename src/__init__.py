@@ -18,12 +18,21 @@ def create_app(test_config=None):
                 static_folder='../static')
 
     FlaskJSON(app)
-    CORS(app, supports_credentials=True)
+    CORS(app, origins=['http://127.0.0.1:5000',
+                       'http://127.0.0.1:3000',
+                       'http://lubuntu-18:3000',
+                       'http://localhost:3000'],
+         supports_credentials=True,
+         allow_headers=['Content-Type'])
 
     socketio_logger = bool(strtobool(os.getenv("SOCKETIO_LOGGER", "False")))
     socketio = SocketIO(app,
         engineio_logger=socketio_logger,
-        cors_allowed_origins=['http://127.0.0.1:5000', 'http://localhost:3000'])
+        cors_allowed_origins=['http://127.0.0.1:5000',
+                              'http://127.0.0.1:3000',
+                              'http://lubuntu-18:3000',
+                              'http://localhost:3000'],
+        cors_credentials=True)
 
     app.config.from_mapping(
         # a default secret that should be overridden by instance config
