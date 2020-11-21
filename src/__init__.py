@@ -21,7 +21,9 @@ def create_app(test_config=None):
     CORS(app)
 
     socketio_logger = bool(strtobool(os.getenv("SOCKETIO_LOGGER", "False")))
-    socketio = SocketIO(app, engineio_logger=socketio_logger, cors_allowed_origins=[])
+    socketio = SocketIO(app,
+        engineio_logger=socketio_logger,
+        cors_allowed_origins=['http://127.0.0.1:5000', 'http://localhost:3000'])
 
     app.config.from_mapping(
         # a default secret that should be overridden by instance config
