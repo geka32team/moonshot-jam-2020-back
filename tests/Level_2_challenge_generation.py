@@ -16,10 +16,6 @@ else :
     x = a
     a, c = c, a
 
-
-
-
-
 answer = int(input(" {} {} {} = ?\n".format(a,sign,b)))
 
 if answer == x :
@@ -27,9 +23,3 @@ if answer == x :
 else :
     print("Answer not correct")
 
-print(a)
-print(b)
-print(c)
-
-print(x)
-answer = int(input(" {} {} {} = ?\n".format(a,sign,b)))
