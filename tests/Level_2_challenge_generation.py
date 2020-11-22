@@ -4,7 +4,7 @@
 import random
 
 a = random.randint(0, 3)
-b = random.randint(0, 5)
+b = random.randint(1, 5)
 c = a*b
 operation = random.randint(0, 1)
 
