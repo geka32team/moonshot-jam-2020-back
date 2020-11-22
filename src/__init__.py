@@ -40,7 +40,7 @@ def create_app(test_config=None):
         # store the database in the instance folder
         DATABASE=os.path.join(app.instance_path, "moonnymathics.sqlite"),
     )
-    app.logger.debug(f"DATABASE={app.config['DATABASE']}")
+    app.logger.info(f"DATABASE={app.config['DATABASE']}")
 
     # Help Chrome browser to use CORS cookies
     app.config.update(
