@@ -23,7 +23,7 @@ def create_app(test_config=None):
                        'http://lubuntu-18:3000',
                        'http://localhost:3000'],
          supports_credentials=True,
-         allow_headers=['Content-Type'])
+         )
 
     socketio_logger = bool(strtobool(os.getenv("SOCKETIO_LOGGER", "False")))
     socketio = SocketIO(app,
