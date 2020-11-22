@@ -57,9 +57,9 @@ def create_app(test_config=None):
 
     # ensure the instance folder exists
     try:
+        app.logger.info(f"creating DATABASE={app.config['DATABASE']}")
         os.makedirs(app.instance_path)
     except OSError:
-        print(f"DATABASE={app.config['DATABASE']} not found")
         pass
 
     # register the database commands
