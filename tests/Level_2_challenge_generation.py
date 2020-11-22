@@ -1,5 +1,5 @@
-"""Challenge level #1.
-   Returns a task in form {"task": "a +/- b = ?", "result": "x"}
+"""Challenge level #2.
+   Returns a task in form {"task": "a (*)/ b = ?", "result": "x"}
 """
 import random
 
