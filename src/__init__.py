@@ -20,10 +20,21 @@ def create_app(test_config=None):
 
     SQLAlchemy(app)
     FlaskJSON(app)
-    CORS(app)
+    CORS(app, origins=['http://127.0.0.1:5000',
+                       'http://127.0.0.1:3000',
+                       'http://lubuntu-18:3000',
+                       'http://localhost:3000'],
+         supports_credentials=True,
+         )
 
     socketio_logger = bool(strtobool(os.getenv("SOCKETIO_LOGGER", "False")))
-    socketio = SocketIO(app, engineio_logger=socketio_logger)
+    socketio = SocketIO(app,
+        engineio_logger=socketio_logger,
+        cors_allowed_origins=['http://127.0.0.1:5000',
+                              'http://127.0.0.1:3000',
+                              'http://lubuntu-18:3000',
+                              'http://localhost:3000'],
+        cors_credentials=True)
 
     app.config.from_mapping(
         # a default secret that should be overridden by instance config
@@ -32,6 +43,13 @@ def create_app(test_config=None):
         DATABASE=os.path.join(app.instance_path, "moonnymathics.sqlite"),
     )
     print(app.config.get('SQLALCHEMY_DATABASE_URI'))
+
+    # Help Chrome browser to use CORS cookies
+    app.config.update(
+        SESSION_COOKIE_SECURE=True,
+        SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SAMESITE='None',
+    )
 
     if test_config is None:
         # load the instance config, if it exists, when not testing

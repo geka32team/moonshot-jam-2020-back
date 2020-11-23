@@ -56,5 +56,6 @@ def signin():
 
     session.clear()
     session['user_id'] = user['id']
+    session['user_username'] = user['username']
 
     return json_response()

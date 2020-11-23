@@ -1,6 +1,7 @@
 import functools
 from flask import current_app, session, g
 from flask_json import JsonError
+from flask_socketio import disconnect
 
 from .db import get_db
 
@@ -31,6 +32,24 @@ def signin_required(view):
         return view(**kwargs)
 
     return wrapped_view
+
+
+def ws_auth_required(handler):
+    """Decorator that checks if socketio client is authenticated."""
+
+    @functools.wraps(handler)   # pragma: no cover
+    def wrapped(*args, **kwargs):
+        user_id = session.get("user_id")
+
+        if user_id is None:
+            current_app.logger.debug("unauthorized")
+            disconnect()
+
+            return None
+
+        return handler(*args, **kwargs)
+
+    return wrapped              # pragma: no cover
 
 
 def init_app(app):

@@ -2,6 +2,8 @@
 
 import os
 import tempfile
+import json
+import logging
 
 import pytest
 from flask.testing import FlaskClient
@@ -64,7 +66,7 @@ def api_client_unauth(app):
 def api_client(api_client_unauth):
     """A authenticated test client for the JSON API."""
     data = {'username': 'test',
-            'password': 'password'},
+            'password': 'password'}
     response = api_client_unauth.post(
         '/api/signin', data=json.dumps(data)
     )
@@ -75,7 +77,20 @@ def api_client(api_client_unauth):
 
 
 @pytest.fixture
-def ws_client_public(app):
-    """A test client for the socketio API."""
+def ws_client_unauth(app, caplog, api_client_unauth):
+    """An unauthenticated test client for the socketio API."""
+
+    caplog.set_level(logging.DEBUG)
+
     socketio = app.extensions.get('socketio')
-    return socketio.test_client(app)
+    return socketio.test_client(app, flask_test_client=api_client_unauth)
+
+
+@pytest.fixture
+def ws_client(app, caplog, api_client):
+    """An authenticated test client for the socketio API."""
+
+    caplog.set_level(logging.DEBUG)
+
+    socketio = app.extensions.get('socketio')
+    return socketio.test_client(app, flask_test_client=api_client)
