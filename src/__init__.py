@@ -2,6 +2,7 @@ import os
 from distutils.util import strtobool
 
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 from flask_json import FlaskJSON
 from flask_cors import CORS
 from flask_socketio import SocketIO
@@ -17,6 +18,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True,
                 static_folder='../static')
 
+    SQLAlchemy(app)
     FlaskJSON(app)
     CORS(app)
 
@@ -29,6 +31,7 @@ def create_app(test_config=None):
         # store the database in the instance folder
         DATABASE=os.path.join(app.instance_path, "moonnymathics.sqlite"),
     )
+    print(app.config.get('SQLALCHEMY_DATABASE_URI'))
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
