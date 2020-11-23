@@ -15,7 +15,6 @@ from . import ws
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__, instance_relative_config=True,
-                instance_path='/var/tmp/flask',
                 static_folder='../static')
 
     FlaskJSON(app)
