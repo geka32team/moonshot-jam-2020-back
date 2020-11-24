@@ -1,19 +1,16 @@
 # pylint: disable=too-few-public-methods
 
-import sqlite3
-
 import pytest
 
-from src.db import get_db
+
+from src.database import db
 
 
 def test_get_close_db(app):
-    with app.app_context():
-        db = get_db()
-        assert db is get_db()
+    assert db is None
 
-    with pytest.raises(sqlite3.ProgrammingError) as e:
-        db.execute("SELECT 1")
+    #  with pytest.raises(sqlite3.ProgrammingError) as e:
+    db.execute("SELECT 1")
 
     assert "closed" in str(e.value)
 
@@ -25,7 +22,7 @@ def test_init_db_command(runner, monkeypatch):
     def fake_init_db():
         Recorder.called = True
 
-    monkeypatch.setattr("src.db.init_db", fake_init_db)
+    monkeypatch.setattr("src.database.init_db", fake_init_db)
     result = runner.invoke(args=["init-db"])
     assert "Initialized" in result.output
     assert Recorder.called

@@ -3,8 +3,6 @@ from flask import current_app, session, g
 from flask_json import JsonError
 from flask_socketio import disconnect
 
-from .db import get_db
-
 
 def load_signed_in_user():
     """If a user id is stored in the session, load the user object from

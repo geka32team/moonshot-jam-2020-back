@@ -2,14 +2,14 @@ import os
 from distutils.util import strtobool
 
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_json import FlaskJSON
 from flask_cors import CORS
 from flask_socketio import SocketIO
 
-from . import api
-from . import db
+from . import database
+from . import model
 from . import auth
+from . import api
 from . import ws
 
 
@@ -18,7 +18,6 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True,
                 static_folder='../static')
 
-    SQLAlchemy(app)
     FlaskJSON(app)
     CORS(app, origins=['http://127.0.0.1:5000',
                        'http://127.0.0.1:3000',
@@ -29,20 +28,23 @@ def create_app(test_config=None):
 
     socketio_logger = bool(strtobool(os.getenv("SOCKETIO_LOGGER", "False")))
     socketio = SocketIO(app,
-        engineio_logger=socketio_logger,
-        cors_allowed_origins=['http://127.0.0.1:5000',
-                              'http://127.0.0.1:3000',
-                              'http://lubuntu-18:3000',
-                              'http://localhost:3000'],
-        cors_credentials=True)
+                        engineio_logger=socketio_logger,
+                        cors_allowed_origins=['http://127.0.0.1:5000',
+                                              'http://127.0.0.1:3000',
+                                              'http://lubuntu-18:3000',
+                                              'http://localhost:3000'],
+                        cors_credentials=True)
 
     app.config.from_mapping(
         # a default secret that should be overridden by instance config
         SECRET_KEY="dev",
+
         # store the database in the instance folder
-        DATABASE=os.path.join(app.instance_path, "moonnymathics.sqlite"),
+        SQLALCHEMY_DATABASE_URI='sqlite:///' + os.path.join(
+            app.instance_path, "moonnymathics.sqlite"),
+        SQLALCHEMY_TRACK_MODIFICATIONS=bool(
+            strtobool(os.getenv("SQLALCHEMY_TRACK_MODIFICATIONS", "False")))
     )
-    print(app.config.get('SQLALCHEMY_DATABASE_URI'))
 
     # Help Chrome browser to use CORS cookies
     app.config.update(
@@ -64,8 +66,9 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # register the database commands
-    db.init_app(app)
+    # init database here when app's config is ready
+    database.db.init_app(app)
+    database.migrate.init_app(app, database.db)
 
     # init and register authentication helpers
     auth.init_app(app)

@@ -6,7 +6,6 @@ from werkzeug.security import generate_password_hash
 from marshmallow import ValidationError
 import jsonschema
 
-from ..db import get_db
 from ..jsonschema.request.register import RegisterSchema as JSONSchema
 from ..validator.api.register import RegisterSchema as ValidationScheama
 

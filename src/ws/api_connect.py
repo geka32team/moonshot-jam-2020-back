@@ -9,4 +9,5 @@ def handler():
     if user_id is None:
         raise ConnectionRefusedError('unauthorized')
 
-    current_app.logger.debug(f"connect '{request.namespace}', user: '{user_username}'")
+    current_app.logger.debug(
+        f"connect '{request.namespace}', user: '{user_username}'")

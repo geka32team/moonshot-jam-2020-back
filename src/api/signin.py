@@ -5,7 +5,6 @@ from flask_json import json_response, JsonError
 from werkzeug.security import check_password_hash
 import jsonschema
 
-from ..db import get_db
 from ..jsonschema.request.signin import SigninSchema as JSONSchema
 
 

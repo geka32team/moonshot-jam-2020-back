@@ -36,14 +36,14 @@ Or on Windows cmd:
 
     $ export FLASK_APP=src
     $ export FLASK_ENV=development
-    $ flask init-db
+    $ flask db upgrade
     $ flask run
 
 Or on Windows cmd:
 
     > set FLASK_APP=src
     > set FLASK_ENV=development
-    > flask init-db
+    > flask db upgrade
     > flask run
 
 Open http://127.0.0.1:5000 in a browser.

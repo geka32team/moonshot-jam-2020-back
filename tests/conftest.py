@@ -1,7 +1,5 @@
 # pylint: disable=redefined-outer-name
 
-import os
-import tempfile
 import json
 import logging
 
@@ -9,32 +7,23 @@ import pytest
 from flask.testing import FlaskClient
 
 from src import create_app
-from src.db import init_db, get_db
-
-
-# read in SQL for populating test data
-with open(os.path.join(os.path.dirname(__file__), "data.sql"), "rb") as f:
-    _data_sql = f.read().decode("utf8")
+from src.database import db, init_db
 
 
 @pytest.fixture
 def app():
     """Create and configure a new app instance for each test."""
-    # create a temporary file to isolate the database for each test
-    db_fd, db_path = tempfile.mkstemp()
+
     # create the app with common test config
-    app = create_app({"TESTING": True, "DATABASE": db_path})
+    app = create_app(
+        {"TESTING": True, "SQLALCHEMY_DATABASE_URI": 'sqlite:///:memory:'})
 
     # create the database and load test data
     with app.app_context():
         init_db()
-        get_db().executescript(_data_sql)
+        #  db.executescript(_data_sql)
 
     yield app
-
-    # close and remove the temporary database
-    os.close(db_fd)
-    os.unlink(db_path)
 
 
 @pytest.fixture
