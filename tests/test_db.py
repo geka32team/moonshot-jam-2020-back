@@ -2,7 +2,6 @@
 
 import pytest
 
-
 from src.database import db
 from src.model.user import User
 
@@ -12,10 +11,11 @@ def test_db_connection(app):
 
     #  with pytest.raises(sqlite3.ProgrammingError) as e:
     with app.app_context():
-        me = User(username='admin3', password='password', ip_address='127.0.0.1')
-        db.session.add(me)
-        db.session.commit()
+        admin = User.query.filter_by(username='admin').first()
+        assert admin.id == 1
 
-        assert me.id == 1
+        admin2 = User.query.filter_by(username='admin2').first()
+        assert admin2.id == 2
 
-    #  assert "closed" == me.id
+        admin3 = User.query.filter_by(username='admin3').first()
+        assert admin3 == None
