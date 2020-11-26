@@ -20,9 +20,6 @@ def signin():
     except jsonschema.exceptions.ValidationError as e:  # pragma: no cover
         current_app.logger.error(f'JSON-schema validation error: {e}')
         raise JsonError(message='bad request') from e
-    except Exception as e:                              # pragma: no cover
-        current_app.logger.error(f'error: {e}')
-        raise JsonError(message='bad request') from e
 
     try:
         user = User.query.filter_by(
