@@ -40,8 +40,8 @@ def register():
 
     try:
         user = User(username=data['username'],
-            password=generate_password_hash(data['password']),
-            ip_address=request.remote_addr)
+                    password=generate_password_hash(data['password']),
+                    ip_address=request.remote_addr)
         db.session.add(user)                    # pylint: disable=no-member
         db.session.commit()                     # pylint: disable=no-member
     except Exception as e:                      # pragma: no cover

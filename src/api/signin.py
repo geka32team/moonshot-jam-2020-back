@@ -24,11 +24,10 @@ def signin():
         current_app.logger.error(f'error: {e}')
         raise JsonError(message='bad request') from e
 
-
     try:
         user = User.query.filter_by(
             username=data.get('username')
-            ).first()
+        ).first()
     except Exception as e:                              # pragma: no cover
         current_app.logger.error(f'DB error: {e}')
         raise JsonError(message='bad request') from e

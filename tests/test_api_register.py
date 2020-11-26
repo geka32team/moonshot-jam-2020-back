@@ -29,7 +29,7 @@ def test_register_if_normal_request_works(api_client_unauth, app, data):
         user = User.query.filter_by(
             username=data.get('username'),
             ip_address='127.0.0.1'
-            ).first()
+        ).first()
 
         assert user is not None
 
@@ -65,6 +65,6 @@ def test_register_if_wrong_data_rejected(
         with app.app_context():
             user = User.query.filter_by(
                 username=data.get('username', None)
-                ).first()
+            ).first()
 
             assert user is None

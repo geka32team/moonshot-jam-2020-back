@@ -18,6 +18,7 @@ pytest_plugins = [
     "tests.plugins.db",
 ]
 
+
 @pytest.fixture
 def app(make_record, scope="session"):      # pylint: disable=unused-argument
     """Create and configure a new app instance for each test."""
