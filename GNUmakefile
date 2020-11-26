@@ -29,7 +29,7 @@ autopep8-fix: autopep8-fix-experimental
 	autopep8 -ri src
 	autopep8 -ri tests
 
-autopep8:	autopep8-diff autopep8-fix
+autopep8:	autopep8-diff
 
 lint:
 	pylint src tests
