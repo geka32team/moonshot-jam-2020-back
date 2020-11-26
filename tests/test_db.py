@@ -1,7 +1,3 @@
-# pylint: disable=too-few-public-methods
-
-import pytest
-
 from src.database import db
 from src.model.user import User
 
@@ -18,4 +14,4 @@ def test_db_connection(app):
         assert admin2.id == 2
 
         admin3 = User.query.filter_by(username='admin3').first()
-        assert admin3 == None
+        assert admin3 is None

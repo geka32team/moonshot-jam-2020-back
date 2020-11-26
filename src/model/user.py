@@ -1,3 +1,5 @@
+# pylint: disable=no-member,too-few-public-methods
+
 from datetime import datetime
 
 

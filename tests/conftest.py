@@ -10,7 +10,6 @@ from flask.testing import FlaskClient
 from flask_migrate import upgrade
 
 from src import create_app
-from src.database import migrate
 
 from .populate_db import populate_db
 
@@ -20,7 +19,7 @@ pytest_plugins = [
 ]
 
 @pytest.fixture
-def app(make_record, scope="session"):
+def app(make_record, scope="session"):      # pylint: disable=unused-argument
     """Create and configure a new app instance for each test."""
     # create a temporary file to isolate the database for each test
     db_fd, db_path = tempfile.mkstemp()

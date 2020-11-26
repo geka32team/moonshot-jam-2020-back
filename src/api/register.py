@@ -42,9 +42,9 @@ def register():
         user = User(username=data['username'],
             password=generate_password_hash(data['password']),
             ip_address=request.remote_addr)
-        db.session.add(user)
-        db.session.commit()
-    except Exception as e:                                  # pragma: no cover
+        db.session.add(user)                    # pylint: disable=no-member
+        db.session.commit()                     # pylint: disable=no-member
+    except Exception as e:                      # pragma: no cover
         current_app.logger.error(f'DB error: {e}')
         raise JsonError(message='bad request') from e
 

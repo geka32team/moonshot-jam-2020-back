@@ -1,5 +1,5 @@
-import pytest
 import json
+import pytest
 from jsonschema import validate
 
 from src.model.user import User
