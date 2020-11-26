@@ -35,7 +35,7 @@ def test_register_if_normal_request_works(api_client_unauth, app, data):
 
 
 @pytest.mark.parametrize('data,is_duplicate', (
-    ({'username': 'admin', 'password': 'secREt_#23'}, True),
+    ({'username': 'test', 'password': 'secREt_#23'}, True),
     ({'username': ' test333', 'password': 'secREt_#23'}, False),
     ({'username': '\ttest333', 'password': 'secREt_#23'}, False),
     ({'username': '\rtest333', 'password': 'secREt_#23'}, False),

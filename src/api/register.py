@@ -39,10 +39,10 @@ def register():
         raise JsonError(message='bad request') from e
 
     try:
-        record = User(username=data['username'],
+        user = User(username=data['username'],
             password=generate_password_hash(data['password']),
             ip_address=request.remote_addr)
-        db.session.add(record)
+        db.session.add(user)
         db.session.commit()
     except Exception as e:                                  # pragma: no cover
         current_app.logger.error(f'DB error: {e}')

@@ -7,7 +7,7 @@ from src.jsonschema.response.response import ResponseSchema
 
 
 @pytest.mark.parametrize('data', (
-    {'username': 'test', 'password': 'password'},
+    {'username': 'test', 'password': 'password_test'},
 ))
 def test_signin_if_normal_request_works(api_client_unauth, data):
     response = api_client_unauth.post(
