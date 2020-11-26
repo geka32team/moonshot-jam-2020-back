@@ -1,31 +1,17 @@
-# pylint: disable=too-few-public-methods
-
-import sqlite3
-
-import pytest
-
-from src.db import get_db
+from src.database import db
+from src.model.user import User
 
 
-def test_get_close_db(app):
+def test_db_connection(app):
+    assert db is not None
+
+    #  with pytest.raises(sqlite3.ProgrammingError) as e:
     with app.app_context():
-        db = get_db()
-        assert db is get_db()
+        admin = User.query.filter_by(username='admin').first()
+        assert admin.id == 1
 
-    with pytest.raises(sqlite3.ProgrammingError) as e:
-        db.execute("SELECT 1")
+        admin2 = User.query.filter_by(username='admin2').first()
+        assert admin2.id == 2
 
-    assert "closed" in str(e.value)
-
-
-def test_init_db_command(runner, monkeypatch):
-    class Recorder:
-        called = False
-
-    def fake_init_db():
-        Recorder.called = True
-
-    monkeypatch.setattr("src.db.init_db", fake_init_db)
-    result = runner.invoke(args=["init-db"])
-    assert "Initialized" in result.output
-    assert Recorder.called
+        admin3 = User.query.filter_by(username='admin3').first()
+        assert admin3 is None

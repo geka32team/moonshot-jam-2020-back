@@ -1,11 +1,10 @@
 import json
-
 import pytest
 from jsonschema import validate
 
+from src.model.user import User
 from src.jsonschema.response.response import ResponseSchema
 from src.jsonschema.response.error import ErrorSchema
-from src.db import get_db
 
 
 @pytest.mark.parametrize('data', (
@@ -27,12 +26,12 @@ def test_register_if_normal_request_works(api_client_unauth, app, data):
 
     # check if record has been added
     with app.app_context():
-        assert get_db().execute(
-            'SELECT * '
-            '  FROM users '
-            ' WHERE username = ? AND ip_address = ?',
-            (data.get('username'), '127.0.0.1')
-        ).fetchone() is not None
+        user = User.query.filter_by(
+            username=data.get('username'),
+            ip_address='127.0.0.1'
+        ).first()
+
+        assert user is not None
 
 
 @pytest.mark.parametrize('data,is_duplicate', (
@@ -51,7 +50,8 @@ def test_register_if_normal_request_works(api_client_unauth, app, data):
     ({'username': 'test_user_222', 'password': 'secREt_#23',
       'addon': 55}, False),
 ))
-def test_register_if_wrong_data_rejected(api_client_unauth, app, data, is_duplicate):
+def test_register_if_wrong_data_rejected(
+        api_client_unauth, app, data, is_duplicate):
     response = api_client_unauth.post(
         '/api/register', data=json.dumps(data)
     )
@@ -63,9 +63,8 @@ def test_register_if_wrong_data_rejected(api_client_unauth, app, data, is_duplic
     if not is_duplicate:
         # check if record has not been added
         with app.app_context():
-            assert get_db().execute(
-                'SELECT * '
-                'FROM users '
-                'WHERE username = ?',
-                (data.get('username', None),),
-            ).fetchone() is None
+            user = User.query.filter_by(
+                username=data.get('username', None)
+            ).first()
+
+            assert user is None

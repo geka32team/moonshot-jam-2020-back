@@ -7,7 +7,8 @@ def test_connect_unauth(caplog, ws_client_unauth):
 
     ws_client_unauth.connect(ns.API)
 
-    ws_client_unauth.send('test_connect_unauth', namespace=ns.API, callback=True)
+    ws_client_unauth.send('test_connect_unauth',
+                          namespace=ns.API, callback=True)
 
     assert f'is not connected to namespace {ns.API}' in caplog.text
 

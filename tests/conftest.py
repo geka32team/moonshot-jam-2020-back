@@ -7,40 +7,39 @@ import logging
 
 import pytest
 from flask.testing import FlaskClient
+from flask_migrate import upgrade
 
 from src import create_app
-from src.db import init_db, get_db
+
+from .populate_db import populate_db
 
 
-# read in SQL for populating test data
-with open(os.path.join(os.path.dirname(__file__), "data.sql"), "rb") as f:
-    _data_sql = f.read().decode("utf8")
+pytest_plugins = [
+    "tests.plugins.db",
+]
 
 
 @pytest.fixture
-def app():
+def app(make_record, scope="session"):      # pylint: disable=unused-argument
     """Create and configure a new app instance for each test."""
     # create a temporary file to isolate the database for each test
     db_fd, db_path = tempfile.mkstemp()
+    os.close(db_fd)
+
     # create the app with common test config
-    app = create_app({"TESTING": True, "DATABASE": db_path})
+    app = create_app({
+        "TESTING": True,
+        "SQLALCHEMY_DATABASE_URI": f'sqlite:///{db_path}'})
 
     # create the database and load test data
     with app.app_context():
-        init_db()
-        get_db().executescript(_data_sql)
+        upgrade()
+        populate_db(make_record)
 
     yield app
 
-    # close and remove the temporary database
-    os.close(db_fd)
+    # remove the temporary database
     os.unlink(db_path)
-
-
-@pytest.fixture
-def runner(app):
-    """A test runner for the app's Click commands."""
-    return app.test_cli_runner()
 
 
 @pytest.fixture
@@ -66,7 +65,7 @@ def api_client_unauth(app):
 def api_client(api_client_unauth):
     """A authenticated test client for the JSON API."""
     data = {'username': 'test',
-            'password': 'password'}
+            'password': 'password_test'}
     response = api_client_unauth.post(
         '/api/signin', data=json.dumps(data)
     )

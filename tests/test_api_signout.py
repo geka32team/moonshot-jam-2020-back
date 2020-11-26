@@ -29,7 +29,7 @@ def test_signout_unauthenticated(api_client_unauth):
     (
         {'endpoint': '/api/signin',
          'data': {'username': 'test',
-                  'password': 'password'},
+                  'password': 'password_test'},
          'response_code': 200,
          'session_exists': True},
         #

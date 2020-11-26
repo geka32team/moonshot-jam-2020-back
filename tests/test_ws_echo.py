@@ -8,7 +8,8 @@ def test_echo(ws_client):
     ws_client.connect(ns.API)
 
     msg = {'msg': 'hello'}
-    ret = ws_client.emit('echo', msg, namespace=ns.API, json=True, callback=True)
+    ret = ws_client.emit('echo', msg, namespace=ns.API,
+                         json=True, callback=True)
 
     validate(schema=JSONSchema, instance=ret)
 
