@@ -65,7 +65,7 @@ def api_client_unauth(app):
 def api_client(api_client_unauth):
     """A authenticated test client for the JSON API."""
     data = {'username': 'test',
-            'password': 'password'}
+            'password': 'password_test'}
     response = api_client_unauth.post(
         '/api/signin', data=json.dumps(data)
     )
