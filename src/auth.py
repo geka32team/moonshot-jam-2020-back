@@ -3,6 +3,8 @@ from flask import current_app, session, g
 from flask_json import JsonError
 from flask_socketio import disconnect
 
+from .model.user import User
+
 
 def load_signed_in_user():
     """If a user id is stored in the session, load the user object from
@@ -12,9 +14,7 @@ def load_signed_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = (get_db().execute(
-            "SELECT * FROM users WHERE id = ? LIMIT 1",
-            (user_id,)).fetchone())
+        g.user = User.query.get(user_id)
 
 
 def signin_required(view):
