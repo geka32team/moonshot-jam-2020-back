@@ -4,25 +4,18 @@ import pytest
 
 
 from src.database import db
+from src.model.user import User
 
 
-def test_get_close_db(app):
-    assert db is None
+def test_db_connection(app):
+    assert db is not None
 
     #  with pytest.raises(sqlite3.ProgrammingError) as e:
-    db.execute("SELECT 1")
+    with app.app_context():
+        me = User(username='admin3', password='password', ip_address='127.0.0.1')
+        db.session.add(me)
+        db.session.commit()
 
-    assert "closed" in str(e.value)
+        assert me.id == 1
 
-
-def test_init_db_command(runner, monkeypatch):
-    class Recorder:
-        called = False
-
-    def fake_init_db():
-        Recorder.called = True
-
-    monkeypatch.setattr("src.database.init_db", fake_init_db)
-    result = runner.invoke(args=["init-db"])
-    assert "Initialized" in result.output
-    assert Recorder.called
+    #  assert "closed" == me.id

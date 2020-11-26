@@ -1,35 +1,45 @@
 # pylint: disable=redefined-outer-name
 
+import os
+import tempfile
 import json
 import logging
 
 import pytest
 from flask.testing import FlaskClient
+from flask_migrate import upgrade
 
 from src import create_app
-from src.database import db, init_db
+from src.database import migrate
 
+from .populate_db import populate_db
+
+
+pytest_plugins = [
+    "tests.plugins.db",
+]
 
 @pytest.fixture
-def app():
+def app(make_record, scope="session"):
     """Create and configure a new app instance for each test."""
+    # create a temporary file to isolate the database for each test
+    db_fd, db_path = tempfile.mkstemp()
+    os.close(db_fd)
 
     # create the app with common test config
-    app = create_app(
-        {"TESTING": True, "SQLALCHEMY_DATABASE_URI": 'sqlite:///:memory:'})
+    app = create_app({
+        "TESTING": True,
+        "SQLALCHEMY_DATABASE_URI": f'sqlite:///{db_path}'})
 
     # create the database and load test data
     with app.app_context():
-        init_db()
-        #  db.executescript(_data_sql)
+        upgrade()
+        populate_db(make_record)
 
     yield app
 
-
-@pytest.fixture
-def runner(app):
-    """A test runner for the app's Click commands."""
-    return app.test_cli_runner()
+    # remove the temporary database
+    os.unlink(db_path)
 
 
 @pytest.fixture
