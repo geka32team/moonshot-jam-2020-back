@@ -1,11 +1,11 @@
-import sqlite3
-
 from flask import Blueprint, request, current_app
 from flask_json import json_response, JsonError
 from werkzeug.security import generate_password_hash
 from marshmallow import ValidationError
 import jsonschema
 
+from ..database import db
+from ..model.user import User
 from ..jsonschema.request.register import RegisterSchema as JSONSchema
 from ..validator.api.register import RegisterSchema as ValidationScheama
 
@@ -38,23 +38,14 @@ def register():
         current_app.logger.error(f'validation error: {e}')
         raise JsonError(message='bad request') from e
 
-    db = get_db()
-
     try:
-        qry = ("INSERT INTO users "
-               "       (username, password, ip_address, created_at) "
-               "VALUES (?, ?, ?, datetime('now'))")
-        params = (data['username'], generate_password_hash(data['password']),
-                  request.remote_addr)
-        db.execute(qry, params)
-
-        db.commit()
-    except (sqlite3.Warning, sqlite3.Error,
-            sqlite3.DatabaseError) as e:                    # pragma: no cover
-        current_app.logger.error(f'DB error: {e}')
-        raise JsonError(message='bad request') from e
+        record = User(username=data['username'],
+            password=generate_password_hash(data['password']),
+            ip_address=request.remote_addr)
+        db.session.add(record)
+        db.session.commit()
     except Exception as e:                                  # pragma: no cover
-        current_app.logger.error(f'error: {e}')
+        current_app.logger.error(f'DB error: {e}')
         raise JsonError(message='bad request') from e
 
     return json_response()
