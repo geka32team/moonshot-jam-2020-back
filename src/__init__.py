@@ -51,7 +51,7 @@ def create_app(test_config=None):
         pass
 
     # init database here when app's config is ready
-    print(f"DB = app.config['SQLALCHEMY_DATABASE_URI']")
+    print(f"DB = {app.config['SQLALCHEMY_DATABASE_URI']}")
     database.db.init_app(app)
     database.migrate.init_app(app, database.db)
 
