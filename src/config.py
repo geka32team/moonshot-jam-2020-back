@@ -25,9 +25,9 @@ class Config(object):
         self.SQLALCHEMY_DATABASE_URI='sqlite:///' + os.path.join(
             app.instance_path, "moonnymathics.sqlite")
         if os.getenv("DATABASE_URL") is not None:
-            SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+            self.SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
         if os.getenv("SQLALCHEMY_DATABASE_URI") is not None:
-            SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
+            self.SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
 
 
 class ProductionConfig(Config):
