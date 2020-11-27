@@ -28,7 +28,7 @@ def app(make_record, scope="session"):      # pylint: disable=unused-argument
 
     # create the app with common test config
     app = create_app({
-        "TESTING": True,
+        "ENV": "testing",
         "SQLALCHEMY_DATABASE_URI": f'sqlite:///{db_path}'})
 
     # create the database and load test data
