@@ -6,6 +6,7 @@ from flask_json import FlaskJSON
 from flask_cors import CORS
 from flask_socketio import SocketIO
 
+from . import config
 from . import database
 from . import model
 from . import auth
@@ -15,43 +16,26 @@ from . import ws
 
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
-    app = Flask(__name__, instance_relative_config=True,
-                static_folder='../static')
+    app = Flask(__name__)
+
+    if app.config["ENV"] == "production":
+        app_config = config.ProductionConfig(app)
+    elif app.config["ENV"] == "testing":
+        app_config = config.TestingConfig(app)
+    else:
+        app_config = config.DevelopmentConfig(app)
+
+    app.config.from_object(app_config)
 
     FlaskJSON(app)
-    CORS(app, origins=['http://127.0.0.1:5000',
-                       'http://127.0.0.1:3000',
-                       'http://lubuntu-18:3000',
-                       'http://localhost:3000'],
+    CORS(app, origins=app.config["CORS_ALLOWED_ORIGINS"],
          supports_credentials=True,
          )
 
-    socketio_logger = bool(strtobool(os.getenv("SOCKETIO_LOGGER", "False")))
     socketio = SocketIO(app,
-                        engineio_logger=socketio_logger,
-                        cors_allowed_origins=['http://127.0.0.1:5000',
-                                              'http://127.0.0.1:3000',
-                                              'http://lubuntu-18:3000',
-                                              'http://localhost:3000'],
+                        engineio_logger=app.config["SOCKETIO_LOGGER"],
+                        cors_allowed_origins=app.config["CORS_ALLOWED_ORIGINS"],
                         cors_credentials=True)
-
-    app.config.from_mapping(
-        # a default secret that should be overridden by instance config
-        SECRET_KEY="dev",
-
-        # store the database in the instance folder
-        SQLALCHEMY_DATABASE_URI='sqlite:///' + os.path.join(
-            app.instance_path, "moonnymathics.sqlite"),
-        SQLALCHEMY_TRACK_MODIFICATIONS=bool(
-            strtobool(os.getenv("SQLALCHEMY_TRACK_MODIFICATIONS", "False")))
-    )
-
-    # Help Chrome browser to use CORS cookies
-    app.config.update(
-        SESSION_COOKIE_SECURE=True,
-        SESSION_COOKIE_HTTPONLY=True,
-        SESSION_COOKIE_SAMESITE='None',
-    )
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
