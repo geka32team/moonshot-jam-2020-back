@@ -36,9 +36,14 @@ def register():
         raise JsonError(message='bad request') from e
 
     try:
+        if request.headers.getlist("X-Forwarded-For"):
+            ip_address = request.headers.getlist("X-Forwarded-For")[-1]
+        else:
+            ip_address = request.remote_addr
+
         user = User(username=data['username'],
                     password=generate_password_hash(data['password']),
-                    ip_address=request.remote_addr)
+                    ip_address=ip_address)
         db.session.add(user)                    # pylint: disable=no-member
         db.session.commit()                     # pylint: disable=no-member
     except Exception as e:                      # pragma: no cover
