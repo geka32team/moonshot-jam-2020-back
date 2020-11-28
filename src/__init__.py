@@ -32,10 +32,10 @@ def create_app(test_config=None):
          supports_credentials=True,
          )
 
-    socketio = SocketIO(app,
-                        engineio_logger=app.config["SOCKETIO_LOGGER"],
-                        cors_allowed_origins=app.config["CORS_ALLOWED_ORIGINS"],
-                        cors_credentials=True)
+    socketio = SocketIO(
+        app, engineio_logger=app.config["SOCKETIO_LOGGER"],
+        cors_allowed_origins=app.config["CORS_ALLOWED_ORIGINS"],
+        cors_credentials=True)
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
