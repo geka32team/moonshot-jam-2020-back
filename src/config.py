@@ -12,6 +12,8 @@ class Config():
     SECRET_KEY = "dev"
 
     SESSION_TYPE = 'filesystem'
+    SESSION_USE_SIGNER = True
+    SESSION_PERMANENT = True
 
     CORS_ALLOWED_ORIGINS = '*'
 
@@ -67,3 +69,7 @@ class TestingConfig(Config):
     TESTING = True
 
     SOCKETIO_LOGGER = True
+
+    SESSION_TYPE = 'null'
+    SESSION_USE_SIGNER = False
+    SESSION_PERMANENT = False

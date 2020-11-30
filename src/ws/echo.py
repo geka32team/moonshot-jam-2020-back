@@ -1,4 +1,4 @@
-from flask import current_app
+from flask import current_app, session
 import jsonschema
 
 from ..jsonschema.request.ws.echo import EchoSchema as JSONSchema
@@ -11,5 +11,4 @@ def handler(msg):
         current_app.logger.error(f'JSON-schema validation error: {e}')
         return None
 
-    current_app.logger.debug(f"msg: {msg}")
     return {'msg': msg}

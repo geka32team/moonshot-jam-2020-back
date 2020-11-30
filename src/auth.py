@@ -32,23 +32,5 @@ def signin_required(view):
     return wrapped_view
 
 
-def ws_auth_required(handler):
-    """Decorator that checks if socketio client is authenticated."""
-
-    @functools.wraps(handler)   # pragma: no cover
-    def wrapped(*args, **kwargs):
-        user_id = session.get("user_id")
-
-        if user_id is None:
-            current_app.logger.debug("unauthorized")
-            disconnect()
-
-            return None
-
-        return handler(*args, **kwargs)
-
-    return wrapped              # pragma: no cover
-
-
 def init_app(app):
     app.before_request(load_signed_in_user)
