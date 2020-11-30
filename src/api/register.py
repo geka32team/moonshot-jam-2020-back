@@ -6,6 +6,7 @@ import jsonschema
 
 from ..database import db
 from ..model.user import User
+from ..model.stat import Stat
 from ..jsonschema.request.register import RegisterSchema as JSONSchema
 from ..validator.api.register import RegisterSchema as ValidationScheama
 
@@ -45,6 +46,11 @@ def register():
                     password=generate_password_hash(data['password']),
                     ip_address=ip_address)
         db.session.add(user)                    # pylint: disable=no-member
+        db.session.flush()                      # pylint: disable=no-member
+
+        stat = Stat(user_id=user.id)
+        db.session.add(stat)                    # pylint: disable=no-member
+
         db.session.commit()                     # pylint: disable=no-member
     except Exception as e:                      # pragma: no cover
         current_app.logger.error(f'DB error: {e}')
