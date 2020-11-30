@@ -21,7 +21,8 @@ class Config():
 
     def __init__(self, app):
         if os.getenv("SECRET_KEY") is not None:
-            self.SECRET_KEY = os.getenv("SECRET_KEY")       # pylint: disable=invalid-name
+            self.SECRET_KEY = os.getenv(                    # pylint: disable=invalid-name
+                "SECRET_KEY")
 
         if os.getenv("CORS_ALLOWED_ORIGINS") is not None:
             self.CORS_ALLOWED_ORIGINS = re.split(           # pylint: disable=invalid-name
