@@ -5,6 +5,7 @@ from flask import Flask
 from flask_json import FlaskJSON
 from flask_cors import CORS
 from flask_socketio import SocketIO
+from flask_session import Session
 
 from . import config
 from . import database
@@ -27,13 +28,17 @@ def create_app(test_config=None):
 
     app.config.from_object(app_config)
 
+    Session(app)
+
     FlaskJSON(app)
     CORS(app, origins=app.config["CORS_ALLOWED_ORIGINS"],
          supports_credentials=True,
          )
 
     socketio = SocketIO(
-        app, engineio_logger=app.config["SOCKETIO_LOGGER"],
+        app,
+        manage_session=False,
+        engineio_logger=app.config["SOCKETIO_LOGGER"],
         cors_allowed_origins=app.config["CORS_ALLOWED_ORIGINS"],
         cors_credentials=True)
 

@@ -11,6 +11,8 @@ class Config():
 
     SECRET_KEY = "dev"
 
+    SESSION_TYPE = 'filesystem'
+
     CORS_ALLOWED_ORIGINS = '*'
 
     SOCKETIO_LOGGER = bool(strtobool(
