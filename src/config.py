@@ -1,9 +1,11 @@
+# pylint: disable=too-few-public-methods
+
 import os
 import re
 from distutils.util import strtobool
 
 
-class Config(object):
+class Config():
     DEBUG = False
     TESTING = False
 
@@ -19,13 +21,13 @@ class Config(object):
 
     def __init__(self, app):
         if os.getenv("SECRET_KEY") is not None:
-            self.SECRET_KEY = os.getenv("SECRET_KEY")
+            self.SECRET_KEY = os.getenv("SECRET_KEY")       # pylint: disable=invalid-name
 
         if os.getenv("CORS_ALLOWED_ORIGINS") is not None:
-            self.CORS_ALLOWED_ORIGINS = re.split(
+            self.CORS_ALLOWED_ORIGINS = re.split(           # pylint: disable=invalid-name
                 '[, ]', os.getenv("CORS_ALLOWED_ORIGINS"))
 
-        self.SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(
+        self.SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(     # pylint: disable=invalid-name
             app.instance_path, "moonnymathics.sqlite")
         if os.getenv("DATABASE_URL") is not None:
             self.SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
