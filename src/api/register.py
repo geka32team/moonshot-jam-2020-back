@@ -2,6 +2,7 @@ from flask import Blueprint, request, current_app
 from flask_json import json_response, JsonError
 from werkzeug.security import generate_password_hash
 from marshmallow import ValidationError
+from sqlalchemy.exc import SQLAlchemyError
 import jsonschema
 
 from ..database import db
@@ -37,9 +38,9 @@ def register():
         raise JsonError(message='bad request') from e
 
     try:
-        if request.headers.getlist("X-Forwarded-For"):
+        if request.headers.getlist("X-Forwarded-For"):      # pragma: no cover
             ip_address = request.headers.getlist("X-Forwarded-For")[-1]
-        else:
+        else:                                   # pragma: no cover
             ip_address = request.remote_addr
 
         user = User(username=data['username'],
@@ -52,7 +53,7 @@ def register():
         db.session.add(stat)                    # pylint: disable=no-member
 
         db.session.commit()                     # pylint: disable=no-member
-    except Exception as e:                      # pragma: no cover
+    except SQLAlchemyError as e:
         current_app.logger.error(f'DB error: {e}')
         raise JsonError(message='bad request') from e
 

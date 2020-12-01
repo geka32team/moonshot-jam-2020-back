@@ -1,7 +1,6 @@
 import functools
 from flask import current_app, session, g
 from flask_json import JsonError
-from flask_socketio import disconnect
 
 from .model.user import User
 

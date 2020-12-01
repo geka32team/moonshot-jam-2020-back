@@ -13,7 +13,7 @@ class Config():
 
     SESSION_TYPE = 'filesystem'
     SESSION_USE_SIGNER = True
-    SESSION_PERMANENT = True
+    SESSION_FILE_THRESHOLD = 100
 
     CORS_ALLOWED_ORIGINS = '*'
 
@@ -24,19 +24,19 @@ class Config():
         os.getenv("SQLALCHEMY_TRACK_MODIFICATIONS", "False")))
 
     def __init__(self, app):
-        if os.getenv("SECRET_KEY") is not None:
+        if os.getenv("SECRET_KEY") is not None:             # pragma: no cover
             self.SECRET_KEY = os.getenv(                    # pylint: disable=invalid-name
                 "SECRET_KEY")
 
-        if os.getenv("CORS_ALLOWED_ORIGINS") is not None:
+        if os.getenv("CORS_ALLOWED_ORIGINS") is not None:   # pragma: no cover
             self.CORS_ALLOWED_ORIGINS = re.split(           # pylint: disable=invalid-name
                 '[, ]', os.getenv("CORS_ALLOWED_ORIGINS"))
 
         self.SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(     # pylint: disable=invalid-name
             app.instance_path, "moonnymathics.sqlite")
-        if os.getenv("DATABASE_URL") is not None:
+        if os.getenv("DATABASE_URL") is not None:           # pragma: no cover
             self.SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
-        if os.getenv("SQLALCHEMY_DATABASE_URI") is not None:
+        if os.getenv("SQLALCHEMY_DATABASE_URI") is not None:    # pragma: no cover
             self.SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
 
 
@@ -71,5 +71,4 @@ class TestingConfig(Config):
     SOCKETIO_LOGGER = True
 
     SESSION_TYPE = 'null'
-    SESSION_USE_SIGNER = False
-    SESSION_PERMANENT = False
+    SESSION_FILE_THRESHOLD = 10
