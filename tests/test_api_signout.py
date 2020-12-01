@@ -26,6 +26,17 @@ def test_signout_authenticated(api_client):
     validate(schema=ResponseSchema, instance=response.get_json())
 
 
+def test_signout_authenticated_with_data(api_client):
+    response = api_client.post(
+        '/api/signout',
+        data=json.dumps({'dummy': 'data'})
+    )
+
+    assert response.status_code == 400
+
+    validate(schema=ResponseSchema, instance=response.get_json())
+
+
 @pytest.mark.parametrize('scenario', (
     (
         {'endpoint': '/api/signin',
