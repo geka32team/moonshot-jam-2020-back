@@ -1,5 +1,5 @@
-from flask import Blueprint, request, current_app, session
-from flask_json import json_response, JsonError
+from flask import Blueprint, session
+from flask_json import json_response
 from flask_socketio import disconnect
 
 from ..auth import signin_required

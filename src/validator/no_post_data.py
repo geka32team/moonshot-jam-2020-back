@@ -16,4 +16,3 @@ def no_post_data(view):
         return view(**kwargs)
 
     return wrapped_view
-
