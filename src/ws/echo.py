@@ -11,5 +11,4 @@ def handler(msg):
         current_app.logger.error(f'JSON-schema validation error: {e}')
         return None
 
-    current_app.logger.debug(f"msg: {msg}")
     return {'msg': msg}

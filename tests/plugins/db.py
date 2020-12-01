@@ -10,4 +10,6 @@ def make_record():
         db.session.add(record)
         db.session.commit()
 
+        return record
+
     return _make_record

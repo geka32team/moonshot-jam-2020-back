@@ -9,5 +9,7 @@ def handler():
     if user_id is None:
         raise ConnectionRefusedError('unauthorized')
 
+    session['ws_sid'] = request.sid
+
     current_app.logger.debug(
         f"connect '{request.namespace}', user: '{user_username}'")

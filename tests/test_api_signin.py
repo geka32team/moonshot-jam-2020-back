@@ -18,16 +18,6 @@ def test_signin_if_normal_request_works(api_client_unauth, data):
 
     validate(schema=ResponseSchema, instance=response.get_json())
 
-    cookie = next(
-        (cookie
-            for cookie
-            in api_client_unauth.cookie_jar
-            if cookie.name == "session"),
-        None
-    )
-
-    assert cookie is not None
-
 
 @pytest.mark.parametrize('data,response_code', (
     ({}, 400),
@@ -47,13 +37,3 @@ def test_signin_if_wrong_attempt_rejected(
     assert response.status_code == response_code
 
     validate(schema=ResponseSchema, instance=response.get_json())
-
-    cookie = next(
-        (cookie
-            for cookie
-            in api_client_unauth.cookie_jar
-            if cookie.name == "session"),
-        None
-    )
-
-    assert cookie is None

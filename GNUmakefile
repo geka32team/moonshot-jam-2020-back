@@ -1,5 +1,8 @@
 .DEFAULT_GOAL:=	all
 
+PYLINT_DIRS?= src tests
+AUTOPEP8_DIRS?= src tests migrations
+
 all: coverage
 
 coverage-run:
@@ -14,22 +17,28 @@ test:
 	pytest
 
 autopep8-diff-experimental:
-	autopep8 -vvvrd --exit-code --experimental --select E501 src
-	autopep8 -vvvrd --exit-code --experimental --select E501 tests
+	@for d in $(AUTOPEP8_DIRS); do \
+		autopep8 -vvvrd --exit-code --experimental --select E501 $$d; \
+	done
 
 autopep8-diff: autopep8-diff-experimental
-	autopep8 -vvvrd --exit-code src
-	autopep8 -vvvrd --exit-code tests
+	@for d in $(AUTOPEP8_DIRS); do \
+		autopep8 -vvvrd --exit-code $$d; \
+	done
 
 autopep8-fix-experimental:
-	autopep8 -ri --experimental --select E501 src
-	autopep8 -ri --experimental --select E501 tests
+	@for d in $(AUTOPEP8_DIRS); do \
+		autopep8 -ri --experimental --select E501 $$d; \
+	done
 
 autopep8-fix: autopep8-fix-experimental
-	autopep8 -ri src
-	autopep8 -ri tests
+	@for d in $(AUTOPEP8_DIRS); do \
+		autopep8 -ri $$d; \
+	done
 
 autopep8:	autopep8-diff
 
 lint:
-	pylint src tests
+	@for d in $(PYLINT_DIRS); do \
+		pylint $$d; \
+	done

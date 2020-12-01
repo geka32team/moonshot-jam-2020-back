@@ -3,6 +3,7 @@ from . import (
     public_connect,
     api_connect,
     echo,
+    get_character_info,
 )
 from .namespace import Namespace as ns
 
@@ -14,3 +15,5 @@ def register_all(app):
 
     app.on_event('connect', api_connect.handler, namespace=ns.API)
     app.on_event('echo', echo.handler, namespace=ns.API)
+    app.on_event('getCharacterInfo',
+                 get_character_info.handler, namespace=ns.API)

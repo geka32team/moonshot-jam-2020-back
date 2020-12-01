@@ -5,6 +5,7 @@ from flask import Flask
 from flask_json import FlaskJSON
 from flask_cors import CORS
 from flask_socketio import SocketIO
+from flask_session import Session
 
 from . import config
 from . import database
@@ -18,14 +19,16 @@ def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__)
 
-    if app.config["ENV"] == "production":
+    if app.config["ENV"] == "production":       # pragma: no cover
         app_config = config.ProductionConfig(app)
-    elif app.config["ENV"] == "testing":
+    elif app.config["ENV"] == "testing":        # pragma: no cover
         app_config = config.TestingConfig(app)
-    else:
+    else:                                       # pragma: no cover
         app_config = config.DevelopmentConfig(app)
 
     app.config.from_object(app_config)
+
+    Session(app)
 
     FlaskJSON(app)
     CORS(app, origins=app.config["CORS_ALLOWED_ORIGINS"],
@@ -33,7 +36,9 @@ def create_app(test_config=None):
          )
 
     socketio = SocketIO(
-        app, engineio_logger=app.config["SOCKETIO_LOGGER"],
+        app,
+        manage_session=False,
+        engineio_logger=app.config["SOCKETIO_LOGGER"],
         cors_allowed_origins=app.config["CORS_ALLOWED_ORIGINS"],
         cors_credentials=True)
 

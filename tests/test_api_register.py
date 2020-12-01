@@ -33,6 +33,8 @@ def test_register_if_normal_request_works(api_client_unauth, app, data):
 
         assert user is not None
 
+        assert user.stat is not None
+
 
 @pytest.mark.parametrize('data,is_duplicate', (
     ({'username': 'test', 'password': 'secREt_#23'}, True),
