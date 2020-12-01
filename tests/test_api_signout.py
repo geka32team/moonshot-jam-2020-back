@@ -15,15 +15,15 @@ def test_signout_unauthenticated(api_client_unauth):
 
     validate(schema=ResponseSchema, instance=response.get_json())
 
-    cookie = next(
-        (cookie
-            for cookie
-            in api_client_unauth.cookie_jar
-            if cookie.name == "session"),
-        None
+
+def test_signout_authenticated(api_client):
+    response = api_client.post(
+        '/api/signout'
     )
 
-    assert cookie is None
+    assert response.status_code == 200
+
+    validate(schema=ResponseSchema, instance=response.get_json())
 
 
 @pytest.mark.parametrize('scenario', (
@@ -42,8 +42,13 @@ def test_signout_unauthenticated(api_client_unauth):
          'ws_available': False},
     ),
 ))
-def test_signout_scenarios(caplog, api_client_unauth, ws_client_unauth, scenario):
+def test_signout_ws_client(
+        caplog, api_client_unauth, ws_client_unauth, scenario):
+    client = ws_client_unauth
+
     for step in scenario:
+        caplog.clear()
+
         data = json.dumps(step['data']) if step['data'] else None
         response = api_client_unauth.post(
             step['endpoint'], data=data
@@ -53,26 +58,13 @@ def test_signout_scenarios(caplog, api_client_unauth, ws_client_unauth, scenario
 
         validate(schema=ResponseSchema, instance=response.get_json())
 
-        cookie = next(
-            (cookie
-                for cookie
-                in api_client_unauth.cookie_jar
-                if cookie.name == "session"),
-            None
-        )
+        client.connect(ns.API)
 
-        assert (cookie is not None) == step['session_exists']
-
-        ws_client_unauth.connect(ns.API)
+        msg = {'msg': 'hello'}
+        ret = client.emit('echo', msg, namespace=ns.API,
+                          json=True, callback=True)
 
         if step['ws_available']:
-            assert f"connect '{ns.API}', user: 'test'" in caplog.text
-
-            msg = {'msg': 'hello'}
-            ret = ws_client_unauth.emit('echo', msg, namespace=ns.API,
-                                json=True, callback=True)
             assert ret['msg'] == msg
         else:
-            assert f'is not connected to namespace {ns.API}' in caplog.text
-
-        caplog.clear()
+            assert f'{client.sid} is not connected to namespace {ns.API}' in caplog.text

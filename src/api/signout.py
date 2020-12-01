@@ -19,7 +19,8 @@ def signout():
             f'no data is expected, but recevied {len(data)} bytes.')
         raise JsonError(message='bad request')
 
-    disconnect(session.get("ws_sid"), ns.API)
+    if session.get("ws_sid") is not None:
+        disconnect(session.get("ws_sid"), ns.API)
 
     session.clear()
 

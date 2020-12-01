@@ -1,6 +1,7 @@
 from flask import Blueprint, request, current_app, session
 from flask_json import json_response, JsonError
 from werkzeug.security import check_password_hash
+from sqlalchemy.exc import SQLAlchemyError
 import jsonschema
 
 from ..model.user import User
@@ -25,7 +26,7 @@ def signin():
         user = User.query.filter_by(
             username=data.get('username')
         ).first()
-    except Exception as e:                              # pragma: no cover
+    except SQLAlchemyError as e:                        # pragma: no cover
         current_app.logger.error(f'DB error: {e}')
         raise JsonError(message='bad request') from e
 

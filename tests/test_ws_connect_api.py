@@ -3,14 +3,13 @@ from src.ws.namespace import Namespace as ns
 
 def test_connect_unauth(caplog, ws_client_unauth):
     """Test if ns.API namespace is unavailable"""
-    assert not ws_client_unauth.is_connected(ns.API)
+    client = ws_client_unauth
 
-    ws_client_unauth.connect(ns.API)
+    client.connect(ns.API)
+    client.send('test_connect_unauth',
+                namespace=ns.API, callback=True)
 
-    ws_client_unauth.send('test_connect_unauth',
-                          namespace=ns.API, callback=True)
-
-    assert f'is not connected to namespace {ns.API}' in caplog.text
+    assert f'{client.sid} is not connected to namespace {ns.API}' in caplog.text
 
 
 def test_connect(caplog, ws_client):

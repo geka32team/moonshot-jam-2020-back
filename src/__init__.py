@@ -19,11 +19,11 @@ def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__)
 
-    if app.config["ENV"] == "production":
+    if app.config["ENV"] == "production":       # pragma: no cover
         app_config = config.ProductionConfig(app)
-    elif app.config["ENV"] == "testing":
+    elif app.config["ENV"] == "testing":        # pragma: no cover
         app_config = config.TestingConfig(app)
-    else:
+    else:                                       # pragma: no cover
         app_config = config.DevelopmentConfig(app)
 
     app.config.from_object(app_config)

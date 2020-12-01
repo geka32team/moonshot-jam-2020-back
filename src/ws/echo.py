@@ -1,4 +1,4 @@
-from flask import current_app, session
+from flask import current_app
 import jsonschema
 
 from ..jsonschema.request.ws.echo import EchoSchema as JSONSchema
