@@ -4,7 +4,6 @@ from ..base import BaseSchema
 
 
 class StatSchema(BaseSchema):
-    id = fields.Integer()
     lvl = fields.Integer()
     hp = fields.Integer()
     exp = fields.Integer()
@@ -15,4 +14,3 @@ class StatSchema(BaseSchema):
     dmg = fields.Integer()
     stats = fields.Integer()
     bosses_defeated = fields.Integer()
-    user_id = fields.Integer()

@@ -3,7 +3,6 @@ GetCharacterInfoSchema = {
 
     'type': 'object',
     'properties': {
-        'id': {'type': 'integer'},
         'lvl': {'type': 'integer'},
         'hp': {'type': 'integer'},
         'exp': {'type': 'integer'},
@@ -14,11 +13,10 @@ GetCharacterInfoSchema = {
         'dmg': {'type': 'integer'},
         'stats': {'type': 'integer'},
         'bosses_defeated': {'type': 'integer'},
-        'user_id': {'type': 'integer'},
     },
 
-    'required': ['id', 'lvl', 'hp', 'exp', 'strn', 'vit', 'dex',
-                 'acc', 'dmg', 'stats', 'bosses_defeated', 'user_id'],
+    'required': ['lvl', 'hp', 'exp', 'strn', 'vit', 'dex',
+                 'acc', 'dmg', 'stats', 'bosses_defeated'],
 
     'additionalProperties': False
 }
