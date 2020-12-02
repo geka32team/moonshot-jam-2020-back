@@ -3,7 +3,7 @@
 """
 import random
 
-def level_2_challenge():
+def level_3_challenge():
     x_place_randomizer = random.randint(0, 1)
     a = random.randint(1, 9)
     b = random.randint(-5, 5)
