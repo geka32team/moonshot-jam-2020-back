@@ -8,9 +8,9 @@ import random
 def level_1_challenge():
     a = random.randint(0, 9)
     b = random.randint(-5, 5)
-    if b < 0 :
+    if b < 0:
         sign = '-'
-    else :
+    else:
         sign = '+'
 
     if sign == '-' and abs(b) > a :
@@ -22,3 +22,4 @@ def level_1_challenge():
 
 
 print(level_1_challenge())
+

@@ -3,50 +3,42 @@
 """
 import random
 
-x_place_randomizer = random.randint(0, 1)
-a = random.randint(0, 9)
-b = random.randint(-5, 5)
-c = a + b
+def level_2_challenge():
+    x_place_randomizer = random.randint(0, 1)
+    a = random.randint(1, 9)
+    b = random.randint(-5, 5)
+    c = a + b
 
-if b < 0 :
-    sign = '-'
-    if x_place_randomizer == 0 :
-        x = a
-        a_mod = 'x'
-        b_mod = -b
-    else :
-        x = -b
-        a_mod = a
-        b_mod = 'x'
+    if b < 0:
+        sign = '-'
+        if x_place_randomizer == 0:
+            x = a
+            a_mod = 'x'
+            b_mod = -b
+        else:
+            x = -b
+            a_mod = a
+            b_mod = 'x'
     
-    if c < 0 :
-        a, b = b, a
-        a_mod, b_mod = b_mod, a_mod
-else :
-    sign = '+'
-    if x_place_randomizer == 0 :
-        x = a
-        a_mod = 'x'
-        b_mod = b
-    else :
-        x = b
-        a_mod = a
-        b_mod = 'x'
-   
-
-print("x = ",x)
-
-answer = int(input(" {} {} {} = {}\n".format(a_mod,sign,b_mod,abs(c))))
-
-if answer == x :
-    print("Well Done")
-else :
-    print("Answer not correct")
+        if c < 0:
+            a, b = b, a
+            a_mod, b_mod = b_mod, a_mod
+    else:
+        sign = '+'
+        if x_place_randomizer == 0:
+            x = a
+            a_mod = 'x'
+            b_mod = b
+        else:
+            x = b
+            a_mod = a
+            b_mod = 'x'
 
 
-print("a=",a)
-print("b=",b)
-print("c=",c)
+    answer = " {} {} {} = {}".format(a_mod,sign,b_mod,abs(c))
 
-answer2 = int(input(" {} {} {} = {}\n".format(a_mod,sign,b_mod,abs(c))))
+    return answer, x
+
+
+
 
