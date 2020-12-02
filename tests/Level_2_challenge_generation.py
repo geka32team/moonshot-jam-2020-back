@@ -3,23 +3,22 @@
 """
 import random
 
-a = random.randint(0, 3)
-b = random.randint(1, 5)
-c = a*b
-operation = random.randint(0, 1)
+def level_2_challenge():
+    a = random.randint(1, 3)
+    b = random.randint(1, 5)
+    c = a*b
+    operation = random.randint(0, 1)
 
-if operation == 0 :
-    sign = '*'
-    x = c
-else :
-    sign = '/'
-    x = a
-    a, c = c, a
+    if operation == 0 :
+        sign = '*'
+        x = c
+    else:
+        sign = '/'
+        x = a
+        a, c = c, a
 
-answer = int(input(" {} {} {} = ?\n".format(a,sign,b)))
+    answer = " {} {} {} = ?".format(a,sign,b)
+    return answer, x
 
-if answer == x :
-    print("Well Done")
-else :
-    print("Answer not correct")
+print(level_2_challenge())
 
