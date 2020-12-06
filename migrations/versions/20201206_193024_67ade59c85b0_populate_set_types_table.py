@@ -1,8 +1,8 @@
 """Populate set_types table.
 
-Revision ID: f81dc620a415
-Revises: b5360749a4a3
-Create Date: 2020-12-05 21:31:54.728605
+Revision ID: 67ade59c85b0
+Revises: 884f58637c94
+Create Date: 2020-12-06 19:30:24.545131
 
 """
 from alembic import op
@@ -12,8 +12,8 @@ from src.model.set_type import SetType
 
 
 # revision identifiers, used by Alembic.
-revision = 'f81dc620a415'
-down_revision = 'b5360749a4a3'
+revision = '67ade59c85b0'
+down_revision = '884f58637c94'
 branch_labels = None
 depends_on = None
 
@@ -27,7 +27,7 @@ def upgrade():
             {'name': 'Silver', 'slug': 'silver'},
             {'name': 'Gold', 'slug': 'gold'},
             {'name': 'Serafim', 'slug': 'serafim'},
-            ])
+        ])
     )
 
 

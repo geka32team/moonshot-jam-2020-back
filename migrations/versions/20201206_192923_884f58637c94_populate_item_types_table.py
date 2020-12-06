@@ -1,8 +1,8 @@
 """Populate item_types table.
 
-Revision ID: b5360749a4a3
-Revises: 0c5a24ddc71b
-Create Date: 2020-12-05 19:28:14.665266
+Revision ID: 884f58637c94
+Revises: c7945a1a032b
+Create Date: 2020-12-06 19:29:23.969046
 
 """
 from alembic import op
@@ -12,8 +12,8 @@ from src.model.item_type import ItemType
 
 
 # revision identifiers, used by Alembic.
-revision = 'b5360749a4a3'
-down_revision = '0c5a24ddc71b'
+revision = '884f58637c94'
+down_revision = 'c7945a1a032b'
 branch_labels = None
 depends_on = None
 
@@ -26,7 +26,7 @@ def upgrade():
             {'name': 'Armor', 'slug': 'armor'},
             {'name': 'Gloves', 'slug': 'gloves'},
             {'name': 'Boots', 'slug': 'boots'},
-            ])
+        ])
     )
 
 

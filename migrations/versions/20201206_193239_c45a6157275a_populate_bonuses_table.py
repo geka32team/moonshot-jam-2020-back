@@ -1,8 +1,8 @@
 """Populate bonuses table.
 
-Revision ID: 16e732774d70
-Revises: f81dc620a415
-Create Date: 2020-12-05 21:40:07.706255
+Revision ID: c45a6157275a
+Revises: 67ade59c85b0
+Create Date: 2020-12-06 19:32:39.398807
 
 """
 from alembic import op
@@ -12,8 +12,8 @@ from src.model.bonus import Bonus
 
 
 # revision identifiers, used by Alembic.
-revision = '16e732774d70'
-down_revision = 'f81dc620a415'
+revision = 'c45a6157275a'
+down_revision = '67ade59c85b0'
 branch_labels = None
 depends_on = None
 
@@ -22,7 +22,7 @@ def upgrade():
     op.execute(
         sa.insert(Bonus).values([
             {'slug': 'generic'},
-            ])
+        ])
     )
 
 

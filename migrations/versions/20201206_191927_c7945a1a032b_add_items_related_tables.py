@@ -1,8 +1,8 @@
-"""Add items table.
+"""Add items related tables.
 
-Revision ID: 0c5a24ddc71b
-Revises: b65791a62e04
-Create Date: 2020-12-05 19:15:36.144483
+Revision ID: c7945a1a032b
+Revises: c9334d3bae92
+Create Date: 2020-12-06 19:19:27.761144
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0c5a24ddc71b'
-down_revision = 'b65791a62e04'
+revision = 'c7945a1a032b'
+down_revision = 'c9334d3bae92'
 branch_labels = None
 depends_on = None
 
@@ -33,7 +33,6 @@ def upgrade():
                     sa.PrimaryKeyConstraint('id'),
                     sa.UniqueConstraint('slug')
                     )
-
     op.create_table('item_types',
                     sa.Column('id', sa.Integer(), nullable=False),
                     sa.Column('name', sa.String(length=100), nullable=False),
@@ -42,7 +41,6 @@ def upgrade():
                     sa.UniqueConstraint('name'),
                     sa.UniqueConstraint('slug')
                     )
-
     op.create_table('set_types',
                     sa.Column('id', sa.Integer(), nullable=False),
                     sa.Column('name', sa.String(length=100), nullable=False),
@@ -51,7 +49,6 @@ def upgrade():
                     sa.UniqueConstraint('name'),
                     sa.UniqueConstraint('slug')
                     )
-
     op.create_table('items',
                     sa.Column('id', sa.Integer(), nullable=False),
                     sa.Column('name', sa.String(length=100), nullable=False),
@@ -62,18 +59,20 @@ def upgrade():
                     sa.Column('bonus_2items_id', sa.Integer(), nullable=False),
                     sa.Column('bonus_fullset_id',
                               sa.Integer(), nullable=False),
+                    sa.ForeignKeyConstraint(['bonus_2items_id'], [
+                        'bonuses.id'], name='items_bonus_2items_id'),
+                    sa.ForeignKeyConstraint(['bonus_fullset_id'], [
+                        'bonuses.id'], name='items_bonus_fullset_id'),
                     sa.ForeignKeyConstraint(
-                        ['bonus_2items_id'], ['bonuses.id'],),
-                    sa.ForeignKeyConstraint(
-                        ['bonus_fullset_id'], ['bonuses.id'],),
-                    sa.ForeignKeyConstraint(['bonus_id'], ['bonuses.id'],),
-                    sa.ForeignKeyConstraint(['item_type_id'], ['item_types.id'],
-                                            ondelete='CASCADE'),
-                    sa.ForeignKeyConstraint(['set_type_id'], ['set_types.id'],
-                                            ondelete='CASCADE'),
+                        ['bonus_id'], ['bonuses.id'], name='items_bonus_id'),
+                    sa.ForeignKeyConstraint(['item_type_id'], [
+                        'item_types.id'], name='items_item_type_id', ondelete='CASCADE'),
+                    sa.ForeignKeyConstraint(['set_type_id'], [
+                        'set_types.id'], name='items_set_type_id', ondelete='CASCADE'),
                     sa.PrimaryKeyConstraint('id'),
                     sa.UniqueConstraint('name'),
-                    sa.UniqueConstraint('slug'))
+                    sa.UniqueConstraint('slug')
+                    )
     # ### end Alembic commands ###
 
 
