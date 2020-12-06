@@ -27,6 +27,6 @@ class Stat(db.Model):
     bosses_defeated = db.Column(db.Integer, default=0, nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey(
-        'users.id', ondelete="CASCADE"),
+        'users.id', name='stats_user_id', ondelete="CASCADE"),
         unique=True, nullable=False)
     user = db.relationship("User", back_populates="stat")
