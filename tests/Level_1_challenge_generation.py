@@ -21,3 +21,4 @@ def level_1_challenge():
     return answer, x
 
 
+print(level_1_challenge())
