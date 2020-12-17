@@ -22,6 +22,7 @@ def level_3_challenge():
     
         if sum((a, b)) < 0:
             a, b = b, a
+            a_mod, b_mod = b_mod, a_mod
 
     else:
         sign = '+'
@@ -35,7 +36,7 @@ def level_3_challenge():
             b_mod = 'x'
     c = a + b
 
-    answer = " {} {} {} = {}".format(a_mod,sign,b_mod,abs(c))
+    answer = " {} {} {} = {}".format(a_mod, sign, b_mod, abs(c))
 
     return answer, x
 
