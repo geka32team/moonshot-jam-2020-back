@@ -20,7 +20,7 @@ def level_3_challenge():
             a_mod = a
             b_mod = 'x'
     
-        if sum(a, b) < 0:
+        if sum((a, b)) < 0:
             a, b = b, a
 
     else:
