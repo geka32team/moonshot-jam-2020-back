@@ -18,24 +18,11 @@ def test_level_1_challenge():
     answer = "{} {} {} = ?".format(abs(a), sign, abs(b))
     print("{} {} {} = {}?".format(abs(a), sign, abs(b), x))
     if sign == "+":
-        assert (abs(a)+abs(b) == x)
+        assert (abs(a)+abs(b) == x and x >= 0)
     else:
-        assert (abs(a)-abs(b) == x)
+        assert (abs(a)-abs(b) == x and x >= 0)
 
 
-def test_level_1_challenge2():
-    a = random.randint(0, 9)
-    b = random.randint(-5, 5)
-    if b < 0:
-        sign = '-'
-    else:
-        sign = '+'
-
-    if sign == '-' and abs(b) > a:
-        a, b = b, a
-    x = abs(a + b)
-    answer = "{} {} {} = ?".format(abs(a), sign, abs(b))
-    assert (x >= x)
 
 
 
