@@ -7,7 +7,7 @@ def level_3_challenge():
     x_place_randomizer = random.randint(0, 1)
     a = random.randint(1, 9)
     b = random.randint(-5, 5)
-    c = a + b
+
 
     if b < 0:
         sign = '-'
@@ -20,9 +20,9 @@ def level_3_challenge():
             a_mod = a
             b_mod = 'x'
     
-        if c < 0:
+        if sum(a, b) < 0:
             a, b = b, a
-            a_mod, b_mod = b_mod, a_mod
+
     else:
         sign = '+'
         if x_place_randomizer == 0:
@@ -33,12 +33,11 @@ def level_3_challenge():
             x = b
             a_mod = a
             b_mod = 'x'
-
+    c = a + b
 
     answer = " {} {} {} = {}".format(a_mod,sign,b_mod,abs(c))
 
     return answer, x
 
-
-
+print(level_3_challenge())
 
