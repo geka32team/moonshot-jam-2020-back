@@ -9,7 +9,7 @@ def level_5_challenge():
     three_numbers_in_braces = random.randint(0, 1)
     x_place_randomizer = random.randint(0, 3)
 
-    braces_place_randomizer = 0
+    braces_place_randomizer = 1
 
     if braces_place_randomizer == 0:
         braces1 = "("
@@ -57,11 +57,27 @@ def level_5_challenge():
             m = random.randint(0, 5)
             n = random.randint(-5, 5)
             o = random.randint(-5, 5)
+            b = m + n + o
+            if n < 0:
+                braces_sign1 = "-"
+            else:
+                braces_sign1 = "+"
+            if o < 0:
+                braces_sign2 = "-"
+            else:
+                braces_sign2 = "+"
+            b_mod = "({} {} {} {} {})".format(m, braces_sign1, abs(n), braces_sign2, abs(o))
             c = 0
         else:
             a = random.randint(0, 5)
             m = random.randint(0, 5)
             n = random.randint(-5, 5)
+            b = m + n
+            if n < 0:
+                braces_sign1 = "-"
+            else:
+                braces_sign1 = "+"
+            b_mod = "({} {} {})".format(m, braces_sign1, abs(n))
             c = random.randint(-5, 5)
     elif braces_place_randomizer == 2:
         if three_numbers_in_braces == 1:
@@ -87,8 +103,8 @@ def level_5_challenge():
 
 
 
-    answer = " {} {} {} {} {} = {}".format( a_mod  , a_mod, a_mod, a_mod, a_mod, a_mod ,a_mod, a_mod, a_mod, d)
-    return answer, a
+
+    return b_mod, b
 
 
 print(level_5_challenge())
