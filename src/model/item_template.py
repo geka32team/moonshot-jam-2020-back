@@ -22,4 +22,9 @@ class ItemTemplate(db.Model):
         ondelete="CASCADE"), nullable=False)
     set_type = db.relationship("SetType")
 
+    bonus_id = db.Column(db.Integer, db.ForeignKey(
+        'bonuses.id', name='item_templates_bonus_id',
+        ondelete="CASCADE"), nullable=False)
+    bonus = db.relationship("Bonus")
+
     UniqueConstraint('set_type_id', 'set_type_id')
