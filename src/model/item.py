@@ -16,11 +16,3 @@ class Item(db.Model):
     bonus_id = db.Column(db.Integer, db.ForeignKey(
         'bonuses.id', name='items_bonus_id'), nullable=False)
     bonus = db.relationship("Bonus", foreign_keys=bonus_id)
-
-    bonus_2items_id = db.Column(db.Integer, db.ForeignKey(
-        'bonuses.id', name='items_bonus_2items_id'), nullable=False)
-    bonus_2items = db.relationship("Bonus", foreign_keys=bonus_2items_id)
-
-    bonus_fullset_id = db.Column(db.Integer, db.ForeignKey(
-        'bonuses.id', name='items_bonus_fullset_id'), nullable=False)
-    bonus_fullset = db.relationship("Bonus", foreign_keys=bonus_fullset_id)
