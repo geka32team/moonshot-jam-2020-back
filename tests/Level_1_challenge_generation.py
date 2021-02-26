@@ -17,11 +17,11 @@ def level_1_challenge(level):
     else:
         a = random.randint((2*level+3), (2*level+9))
         b = random.choice([*range(-(2*level+7),-(level+2)), *range(level+2, (2*level+7))])
-    if b < 0:
+    if b < 0 :
         sign = '-'
     else:
         sign = '+'
-    if a + b == 0:
+    if a + b == 0 or a == 0:
         a += 1
     if sign == '-' and abs(b) > a :
         a, b = b, a
