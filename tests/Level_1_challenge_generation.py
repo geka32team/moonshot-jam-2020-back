@@ -16,7 +16,7 @@ def level_1_challenge(level):
         b = random.choice([*range(-(2*level+5),-(level+2)), *range(level+2, (2*level+5))])
     else:
         a = random.randint((2*level+3), (2*level+9))
-        b = random.choice([*range(-(2*level+5),-(level+2)), *range(level+2, (2*level+6))])
+        b = random.choice([*range(-(2*level+7),-(level+2)), *range(level+2, (2*level+7))])
     if b < 0:
         sign = '-'
     else:
