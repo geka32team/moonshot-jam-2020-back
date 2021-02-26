@@ -10,13 +10,13 @@ def level_1_challenge(level):
 
     if level <= 10:
         a = random.randint(level+4, (2*level+8))
-        b = random.choice([*range(-(level+2),-(2*level+4)), *range(level+2, (2*level+4))])
+        b = random.choice([*range(-(2*level+4)-(level+2)), *range(level+2),(2*level+4)])
     elif level > 10 and level <= 20:
         a = random.randint(level+4, (2*level+9))
-        b = random.choice([*range(-(level+2),-(2*level+5)), *range(level+2, (2*level+5))])
+        b = random.choice([*range(-(2*level+5),-(level+2)), *range(level+2, (2*level+5))])
     else:
         a = random.randint((2*level+3), (2*level+9))
-        b = random.choice([*range(-(level+2),-(2*level+5)), *range(level+2, (2*level+5))])
+        b = random.choice([*range(-(2*level+5),-(level+2)), *range(level+2, (2*level+6))])
     if b < 0:
         sign = '-'
     else:
@@ -31,4 +31,4 @@ def level_1_challenge(level):
 
 
 
-print(level_1_challenge(33))
+print(level_1_challenge(19))
