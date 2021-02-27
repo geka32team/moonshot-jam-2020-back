@@ -17,8 +17,6 @@ def level_1_challenge(level):
     else:
         a = random.randint((2*level+3), (2*level+9))
         b = random.choice([*range(-(2*level+7),-(level+2)), *range((level+2), (2*level+7))])
-    print(a)
-    print(b)
 
     if b < 0 :
         sign = '-'
@@ -34,4 +32,4 @@ def level_1_challenge(level):
 
 
 
-print(level_1_challenge(5))
+
