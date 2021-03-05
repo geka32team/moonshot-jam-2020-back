@@ -28,7 +28,7 @@ def level_1_challenge(level):
         a, b = b, a
 
     if sign == '-' :
-        a *= int(1.3)
+        a = int(a * 1.3)
     x = abs(a+b)
     answer = "{} {} {} = ?".format(abs(a),sign,abs(b))
     return answer, x,
