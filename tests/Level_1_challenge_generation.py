@@ -9,14 +9,14 @@ import random
 def level_1_challenge(level):
 
     if level <= 10:
-        a = random.randint(level+4, (2*level+8))
+        a = random.randint((level+4), (2*level+8))
         b = random.choice([*range(-(2*level+4),-(level+2)), *range((level+2),(2*level+4))])
     elif level > 10 and level <= 20:
-        a = random.randint(level+4, (2*level+9))
-        b = random.choice([*range(-(2*level+5),-(level+2)), *range((level+2), (2*level+5))])
+        a = random.randint((level+4), (3*level+7))
+        b = random.choice([*range(-(3*level+3),-(level+2)), *range((level+2), (3*level+3))])
     else:
-        a = random.randint((2*level+3), (2*level+9))
-        b = random.choice([*range(-(2*level+7),-(level+2)), *range((level+2), (2*level+7))])
+        a = random.randint((2*level+3), (5*level+5))
+        b = random.choice([*range(-(5*level-3),-(2*level+4)), *range((2*level+4), (5*level-3))])
 
     if b < 0 :
         sign = '-'
@@ -26,10 +26,12 @@ def level_1_challenge(level):
         a += 1
     if sign == '-' and abs(b) > a :
         a, b = b, a
+
+    if sign == '-' :
+        a *= int(1.3)
     x = abs(a+b)
     answer = "{} {} {} = ?".format(abs(a),sign,abs(b))
-    return answer, x, a, b
+    return answer, x,
 
-
-
+print(level_1_challenge(1))
 
