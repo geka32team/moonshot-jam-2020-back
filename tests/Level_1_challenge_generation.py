@@ -14,8 +14,8 @@ def level_1_challenge(level):
         "n1": 2,
         "m2": 1,
         "n2": 3,
-        "m3": 5,
-        "n3": 2
+        "m3": 2,
+        "n3": 5
     }
 
     amin1 = dict.get("m1") * level + 4
@@ -29,9 +29,9 @@ def level_1_challenge(level):
     bmax2 = ((dict.get("n1") * 10) + (dict.get("n2") * (level-10))) + 4
 
     amin3 = ((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20))) + 4
-    amax3 = ((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20))) + 8
+    amax3 = ((dict.get("n1") * 10) + (dict.get("n2") * 10) + (dict.get("n3") * (level-20))) + 8
     bmin3 = ((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20))) + 2
-    bmax3 = ((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20))) + 4
+    bmax3 = ((dict.get("n1") * 10) + (dict.get("n2") * 10) + (dict.get("n3") * (level-20))) + 4
 
 
     if level <= 10:
