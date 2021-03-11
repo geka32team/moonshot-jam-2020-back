@@ -23,15 +23,15 @@ def level_1_challenge(level):
     bmin1 = dict.get("m1") * level + 2
     bmax1 = dict.get("n1") * level + 4
 
-    amin2 = math.floor(((dict.get("m1") * 10) + (dict.get("m2") * (level-10)))/10) + 4
-    amax2 = math.floor(((dict.get("n1") * 10) + (dict.get("n2") * (level-10)))/10) + 8
-    bmin2 = math.floor(((dict.get("m1") * 10) + (dict.get("m2") * (level-10)))/10) + 2
-    bmax2 = math.floor(((dict.get("n1") * 10) + (dict.get("n2") * (level-10)))/10) + 4
+    amin2 = ((dict.get("m1") * 10) + (dict.get("m2") * (level-10))) + 4
+    amax2 = ((dict.get("n1") * 10) + (dict.get("n2") * (level-10))) + 8
+    bmin2 = ((dict.get("m1") * 10) + (dict.get("m2") * (level-10))) + 2
+    bmax2 = ((dict.get("n1") * 10) + (dict.get("n2") * (level-10))) + 4
 
-    amin3 = math.floor(((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20)))/10) + 4
-    amax3 = math.floor(((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20)))/10) + 8
-    bmin3 = math.floor(((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20)))/10) + 2
-    bmax3 = math.floor(((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20)))/10) + 4
+    amin3 = ((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20))) + 4
+    amax3 = ((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20))) + 8
+    bmin3 = ((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20))) + 2
+    bmax3 = ((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20))) + 4
 
 
     if level <= 10:
@@ -59,5 +59,5 @@ def level_1_challenge(level):
     answer = "{} {} {} = ?".format(abs(a),sign,abs(b))
     return answer, x,
 
-print(level_1_challenge(10))
+print(level_1_challenge(21))
 
