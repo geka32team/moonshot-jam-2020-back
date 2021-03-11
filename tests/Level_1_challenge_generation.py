@@ -14,8 +14,8 @@ def level_1_challenge(level):
         "n1": 2,
         "m2": 1,
         "n2": 3,
-        "m3": 5,
-        "n3": 2
+        "m3": 2,
+        "n3": 5
     }
 
     amin1 = dict.get("m1") * level + 4
