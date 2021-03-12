@@ -6,8 +6,7 @@
 import math
 import random
 
-def level_1_challenge(level):
-
+def count_limits(level):
 
     dict = {
         "m1": 1,
@@ -18,31 +17,26 @@ def level_1_challenge(level):
         "n3": 5
     }
 
-    amin1 = dict.get("m1") * level + 4
-    amax1 = dict.get("n1") * level + 8
-    bmin1 = dict.get("m1") * level + 2
-    bmax1 = dict.get("n1") * level + 4
-
-    amin2 = ((dict.get("m1") * 10) + (dict.get("m2") * (level-10))) + 4
-    amax2 = ((dict.get("n1") * 10) + (dict.get("n2") * (level-10))) + 8
-    bmin2 = ((dict.get("m1") * 10) + (dict.get("m2") * (level-10))) + 2
-    bmax2 = ((dict.get("n1") * 10) + (dict.get("n2") * (level-10))) + 4
-
-    amin3 = ((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20))) + 4
-    amax3 = ((dict.get("n1") * 10) + (dict.get("n2") * 10) + (dict.get("n3") * (level-20))) + 8
-    bmin3 = ((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level-20))) + 2
-    bmax3 = ((dict.get("n1") * 10) + (dict.get("n2") * 10) + (dict.get("n3") * (level-20))) + 4
-
+    dec = ((math.floor(level/10)) * 10)
 
     if level <= 10:
-        a = random.randint(amin1, amax1)
-        b = random.choice([*range(-bmax1,-bmin1 + 1), *range(bmin1, bmax1 + 1)])
+        min = (dict.get("m1") * level)
+        max = (dict.get("n1") * level)
     elif level > 10 and level <= 20:
-        a = random.randint(amin2, amax2)
-        b = random.choice([*range(-bmax2,-bmin2 + 1), *range(bmin2, bmax2 + 1)])
+        min = ((dict.get("m1") * 10) + (dict.get("m2") * (level - dec)))
+        max = ((dict.get("n1") * 10) + (dict.get("n2") * (level - dec)))
     else:
-        a = random.randint(amin3, amax3)
-        b = random.choice([*range(-bmax3,-bmin3 + 1), *range(bmin3, bmax3 + 1)])
+        min = ((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level - dec)))
+        max = ((dict.get("n1") * 10) + (dict.get("n2") * 10) + (dict.get("n3") * (level - dec)))
+
+    return [min, max]
+
+
+def level_1_challenge(level):
+
+    a = random.randint(count_limits(level)[0]+4, count_limits(level)[1] + 8)
+    b = random.choice([*range((-count_limits(level)[1]) - 4,(-count_limits(level)[0]) - 3), *range((count_limits(level)[0] + 2), (count_limits(level)[1]) + 5)])
+
     print(a, b)
     if b < 0 :
         sign = '-'
@@ -59,5 +53,5 @@ def level_1_challenge(level):
     answer = "{} {} {} = ?".format(abs(a),sign,abs(b))
     return answer, x,
 
-print(level_1_challenge(21))
+print(level_1_challenge(1))
 
