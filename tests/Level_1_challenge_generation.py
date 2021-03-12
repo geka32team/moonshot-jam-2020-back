@@ -6,52 +6,41 @@
 import math
 import random
 
-def count_limits(level):
+def get_limits(lvl):
 
-    dict = {
-        "m1": 1,
-        "n1": 2,
-        "m2": 1,
-        "n2": 3,
-        "m3": 2,
-        "n3": 5
-    }
+    fib = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
 
-    dec = ((math.floor(level/10)) * 10)
+    min = 3
+    max = 6
 
-    if level <= 10:
-        min = (dict.get("m1") * level)
-        max = (dict.get("n1") * level)
-    elif level > 10 and level <= 20:
-        min = ((dict.get("m1") * 10) + (dict.get("m2") * (level - dec)))
-        max = ((dict.get("n1") * 10) + (dict.get("n2") * (level - dec)))
-    else:
-        min = ((dict.get("m1") * 10) + (dict.get("m2") * 10) + (dict.get("m3") * (level - dec)))
-        max = ((dict.get("n1") * 10) + (dict.get("n2") * 10) + (dict.get("n3") * (level - dec)))
+    deca = math.floor(lvl/10)
+
+    for i in range(math.ceil(lvl/10)):
+        min += fib[i] * (10 if deca else lvl%10)
+        max += fib[i + 2] * (10 if deca else lvl%10)
+        deca -= 1
 
     return [min, max]
 
 
 def level_1_challenge(level):
+    limits = get_limits(level)
+    min = limits[0]
+    max = limits[1]
 
-    a = random.randint(count_limits(level)[0]+4, count_limits(level)[1] + 8)
-    b = random.choice([*range((-count_limits(level)[1]) - 4,(-count_limits(level)[0]) - 3), *range((count_limits(level)[0] + 2), (count_limits(level)[1]) + 5)])
+    a = random.randint(min, max)
+    b = random.randint(min, max)
+    x = a + b
 
-    print(a, b)
-    if b < 0 :
+    if random.randint(0, 1) :
         sign = '-'
+        if b > a :
+            a, b = b, a
+        a = int(a * 1.3)
+        x = a - b
     else:
         sign = '+'
-    if a + b == 0:
-        a += 1
-    if sign == '-' and abs(b) > a :
-        a, b = b, a
 
-    if sign == '-' :
-        a = int(a * 1.3)
-    x = abs(a+b)
-    answer = "{} {} {} = ?".format(abs(a),sign,abs(b))
+    answer = "{} {} {} = ?".format(a, sign, b)
     return answer, x,
-
-print(level_1_challenge(1))
 
