@@ -6,7 +6,7 @@
 import math
 import random
 
-def get_limits(lvl):
+def get_limits_1(lvl):
 
     fib = [1, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
 
@@ -29,30 +29,88 @@ def get_limits(lvl):
 
     return [min, max]
 
+def get_limits_2(lvl):
 
-def level_2_challenge(level):
-    limits = get_limits(level)
+    fib = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+
+    min = 3
+    max = 6
+
+    deca = math.floor(lvl/10)
+
+    for i in range(math.ceil(lvl/10)):
+        min += fib[i] * (10 if deca else lvl%10)
+        max += fib[i + 2] * (10 if deca else lvl%10)
+        deca -= 1
+
+    return [min, max]
+
+def level_2_challenge_1(level):
+    limits = get_limits_1(level)
     min = limits[0]
     max = limits[1]
 
     a = random.randint(min, max)
     b = random.randint(min, max)
-    x = a + b
+    c = a * b
+    operation = random.randint(0, 1)
 
-    if random.randint(0, 1) :
+    if operation == 0:
+        sign = '*'
+        x = c
+    else:
+        sign = '/'
+        x = a
+        a, c = c, a
+
+    answer = " {} {} {} = ?".format(a, sign, b)
+    return answer, x
+
+def level_2_challenge_2(level):
+    x_place_randomizer = random.randint(0, 1)
+    limits = get_limits_2(level)
+    min = limits[0]
+    max = limits[1]
+
+    a = random.randint(min, max)
+    b = random.randint(min, max)
+
+    if b < 0:
         sign = '-'
-        if b > a :
+        if x_place_randomizer == 0:
+            x = a
+            a_mod = 'x'
+            b_mod = -b
+        else:
+            x = -b
+            a_mod = a
+            b_mod = 'x'
+
+        if sum((a, b)) < 0:
             a, b = b, a
-        a = int(a * 1.3)
-        x = a - b
+            a_mod, b_mod = b_mod, a_mod
+
     else:
         sign = '+'
+        if x_place_randomizer == 0:
+            x = a
+            a_mod = 'x'
+            b_mod = b
+        else:
+            x = b
+            a_mod = a
+            b_mod = 'x'
+    c = a + b
 
-    answer = "{} {} {} = ?".format(a, sign, b)
-    return answer, x,
+    answer = " {} {} {} = {}".format(a_mod, sign, b_mod, abs(c))
 
-print(level_2_challenge(23))
-print(level_2_challenge(24))
-print(level_2_challenge(25))
-print(level_2_challenge(26))
-print(level_2_challenge(27))
+    return answer, x
+
+def level_2_challenge(level):
+    randomizer = random.randint(0, 1);
+    if randomizer == 0:
+        return level_2_challenge_1(level)
+    else:
+        return level_2_challenge_2(level)
+
+print(level_2_challenge(1))
