@@ -1,7 +1,7 @@
 """Challenge level #2.
    Returns a task in form {"task": "a (*)/ b = ?", "result": "x"}
    OR
-   Returns a task in form {"task": "a +/-x = c"  or "x +/-b = c", "result": "x"}
+   Returns a task in form {"task": "a +/-x = c"  or "x +/-b = c" or "a +/- b = x", "result": "x"}
 """
 import math
 import random
