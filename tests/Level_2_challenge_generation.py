@@ -13,12 +13,12 @@ def get_limits_1(lvl):
     min = 1
     max = 2
 
-    deca = math.floor(lvl/12)
+    deca = lvl//12
 
     for i in range(math.ceil(lvl/12)):
         rest = lvl%12
-        min += fib[i] * (4 if deca else math.floor(rest/3))
-        max += fib[i + 3] * (4 if deca else math.floor(rest/3))
+        min += fib[i] * (4 if deca else rest//3)
+        max += fib[i + 3] * (4 if deca else rest//3)
         if(rest%3 == 1):
             max += 1
         elif (rest%3 == 2):
@@ -36,7 +36,7 @@ def get_limits_2(lvl):
     min = 3
     max = 6
 
-    deca = math.floor(lvl/10)
+    deca = lvl//10
 
     for i in range(math.ceil(lvl/10)):
         min += fib[i] * (10 if deca else lvl%10)
@@ -110,13 +110,13 @@ def level_2_challenge_2(level):
     return answer, x
 
 def level_2_challenge(level):
-    randomizer = random.randint(0, 1);
-    if randomizer == 0:
-        return level_2_challenge_1(level)
-    else:
-        return level_2_challenge_2(level)
+    return level_2_challenge_2(level) if random.randint(0, 1) else level_2_challenge_1(level)
 
-print(level_2_challenge(1))
-print(level_2_challenge(2))
-print(level_2_challenge(3))
-print(level_2_challenge(4))
+print(level_2_challenge(11))
+print(level_2_challenge(12))
+print(level_2_challenge(13))
+print(level_2_challenge(14))
+print(level_2_challenge(15))
+print(level_2_challenge(16))
+print(level_2_challenge(17))
+print(level_2_challenge(18))
