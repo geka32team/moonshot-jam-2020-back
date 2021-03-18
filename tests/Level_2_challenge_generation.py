@@ -5,8 +5,9 @@
 """
 import math
 import random
+from Level_1_challenge_generation import get_limits as get_lim
 
-def get_limits_1(lvl):
+def get_limits(lvl):
 
     fib = [1, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
 
@@ -29,24 +30,9 @@ def get_limits_1(lvl):
 
     return [min, max]
 
-def get_limits_2(lvl):
-
-    fib = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
-
-    min = 3
-    max = 6
-
-    deca = lvl//10
-
-    for i in range(math.ceil(lvl/10)):
-        min += fib[i] * (10 if deca else lvl%10)
-        max += fib[i + 2] * (10 if deca else lvl%10)
-        deca -= 1
-
-    return [min, max]
 
 def level_2_challenge_1(level):
-    limits = get_limits_1(level)
+    limits = get_limits(level)
     min = limits[0]
     max = limits[1]
 
@@ -69,7 +55,7 @@ def level_2_challenge_1(level):
 def level_2_challenge_2(level):
     randomizer = random.randint(0, 1)
     x_place_randomizer = random.randint(0, 2)
-    limits = get_limits_2(level)
+    limits = get_lim(level)
     min = limits[0]
     max = limits[1]
 
