@@ -25,7 +25,7 @@ def get_limits_1(lvl):
             max += 2
 
         deca -= 1
-    print([min, max]);
+
 
     return [min, max]
 
@@ -67,7 +67,8 @@ def level_2_challenge_1(level):
     return answer, x
 
 def level_2_challenge_2(level):
-    x_place_randomizer = random.randint(0, 1)
+    randomizer = random.randint(0, 1)
+    x_place_randomizer = random.randint(0, 2)
     limits = get_limits_2(level)
     min = limits[0]
     max = limits[1]
@@ -75,34 +76,36 @@ def level_2_challenge_2(level):
     a = random.randint(min, max)
     b = random.randint(min, max)
 
-    if b < 0:
-        sign = '-'
-        if x_place_randomizer == 0:
-            x = a
-            a_mod = 'x'
-            b_mod = -b
-        else:
-            x = -b
-            a_mod = a
-            b_mod = 'x'
 
-        if sum((a, b)) < 0:
-            a, b = b, a
-            a_mod, b_mod = b_mod, a_mod
-
-    else:
+    if randomizer == 0:
         sign = '+'
-        if x_place_randomizer == 0:
-            x = a
-            a_mod = 'x'
-            b_mod = b
-        else:
-            x = b
-            a_mod = a
-            b_mod = 'x'
-    c = a + b
+        c = a + b
+    else:
+        sign = '-'
+        if b > a:
+            a, b = b, a
+        if b == a:
+            a += 1
+        a = int(a * 1.3)
+        c = a - b
 
-    answer = " {} {} {} = {}".format(a_mod, sign, b_mod, abs(c))
+    if x_place_randomizer == 0:
+        x = a
+        a_mod = 'x'
+        b_mod = b
+        c_mod = c
+    elif x_place_randomizer == 1:
+        x = b
+        a_mod = a
+        b_mod = 'x'
+        c_mod = c
+    else:
+        x = c
+        a_mod = a
+        b_mod = b
+        c_mod = 'x'
+
+    answer = " {} {} {} = {}".format(a_mod, sign, b_mod, c_mod)
 
     return answer, x
 
@@ -114,3 +117,6 @@ def level_2_challenge(level):
         return level_2_challenge_2(level)
 
 print(level_2_challenge(1))
+print(level_2_challenge(2))
+print(level_2_challenge(3))
+print(level_2_challenge(4))
