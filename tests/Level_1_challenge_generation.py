@@ -48,4 +48,3 @@ def level_1_challenge(level):
     answer = "{} {} {} = ?".format(a, sign, b)
     return answer, x,
 
-print(level_1_challenge(1))

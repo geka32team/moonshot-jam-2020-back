@@ -98,11 +98,3 @@ def level_2_challenge_2(level):
 def level_2_challenge(level):
     return level_2_challenge_2(level) if random.randint(0, 1) else level_2_challenge_1(level)
 
-print(level_2_challenge(11))
-print(level_2_challenge(12))
-print(level_2_challenge(13))
-print(level_2_challenge(14))
-print(level_2_challenge(15))
-print(level_2_challenge(16))
-print(level_2_challenge(17))
-print(level_2_challenge(18))
