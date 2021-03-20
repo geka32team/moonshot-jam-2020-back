@@ -1,44 +1,69 @@
 """Challenge level #3.
-   Returns a task in form {"task": "a +/-x = c"  or "x +/-b = c", "result": "x"}
+   Returns a task in form {"task": "x +/- b +/- c = d","a +/- x +/- c = d , a +/- b +/- x = d", "result": "x"}
 """
 import random
+from Level_1_challenge_generation import get_limits as get_lim
 
-def level_3_challenge():
-    x_place_randomizer = random.randint(0, 1)
-    a = random.randint(1, 9)
-    b = random.randint(-5, 5)
+def level_3_challenge(level):
+
+    randomizer = random.randint(0, 3)
+    x_place_randomizer = random.randint(0, 2)
+    limits = get_lim(level)
+    min = limits[0]
+    max = limits[1]
+
+    a = random.randint(min, max)
+    b = random.randint(min, max)
+    c = random.randint(min, max)
+
+    if randomizer == 0:
+        sign1 = '+'
+        sign2 = '+'
+        d = a + b + c
+
+    elif randomizer == 1:
+        sign1 = '+'
+        sign2 = '-'
+        d = a + b - c
+        if d < 0:
+            d, c = c, -d
+            sign2 = '+'
+
+    elif randomizer == 2:
+        sign1 = '-'
+        sign2 = '+'
+        d = a - b + c
+        if d < 0:
+            d, b = b, -d
+            sign1 = '+'
+
+    elif randomizer == 3:
+        sign1 = '-'
+        sign2 = '-'
+        d = a - b - c
+        if d < 0:
+            d, b = b, -d
+            sign1 = '+'
 
 
-    if b < 0:
-        sign = '-'
-        if x_place_randomizer == 0:
-            x = a
-            a_mod = 'x'
-            b_mod = -b
-        else:
-            x = -b
-            a_mod = a
-            b_mod = 'x'
-    
-        if sum((a, b)) < 0:
-            a, b = b, a
-            a_mod, b_mod = b_mod, a_mod
-
+    if x_place_randomizer == 0:
+        x = a
+        a_mod = 'x'
+        b_mod = b
+        c_mod = c
+    elif x_place_randomizer == 1:
+        x = b
+        a_mod = a
+        b_mod = 'x'
+        c_mod = c
     else:
-        sign = '+'
-        if x_place_randomizer == 0:
-            x = a
-            a_mod = 'x'
-            b_mod = b
-        else:
-            x = b
-            a_mod = a
-            b_mod = 'x'
-    c = a + b
+        x = c
+        a_mod = a
+        b_mod = b
+        c_mod = 'x'
 
-    answer = " {} {} {} = {}".format(a_mod, sign, b_mod, abs(c))
+    answer = " {} {} {} {} {} = {}".format(a_mod, sign1, b_mod, sign2, c_mod, d)
 
     return answer, x
 
-print(level_3_challenge())
-
+print(level_3_challenge(1))
