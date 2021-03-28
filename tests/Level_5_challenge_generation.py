@@ -114,8 +114,7 @@ def level_5_challenge(level):
     elif brackets_randomizer == 2:
         if sign2 == "-" and sign3 == "+":
             sign3 = "-"
-            print("changed")
-        print("oops")
+
         answer = " {} {} {} {} ({} {} {}) = {}".format(a_mod, sign1, b_mod, sign2, c_mod, sign3, d_mod, e)
     elif brackets_randomizer == 3:
         if sign1 == "-" and sign2 == "+":
