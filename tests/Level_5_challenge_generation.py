@@ -6,7 +6,7 @@ from Level_1_challenge_generation import get_limits as get_lim
 
 def level_5_challenge(level):
     randomizer = random.randint(0, 7)
-    brackets_randomizer = random.randint(0, 2)
+    brackets_randomizer = random.randint(0, 4)
     x_place_randomizer = random.randint(0, 3)
     limits = get_lim(level)
     min = limits[0]
