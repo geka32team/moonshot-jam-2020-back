@@ -48,22 +48,14 @@ def level_3_challenge(level):
 
     if x_place_randomizer == 0:
         x = a
-        a_mod = 'x'
-        b_mod = b
-        c_mod = c
+        answer = " x {} {} {} {} = {}".format(sign1, b, sign2, c, d)
     elif x_place_randomizer == 1:
         x = b
-        a_mod = a
-        b_mod = 'x'
-        c_mod = c
+        answer = " {} {} x {} {} = {}".format(a, sign1, sign2, c, d)
     else:
         x = c
-        a_mod = a
-        b_mod = b
-        c_mod = 'x'
-
-    answer = " {} {} {} {} {} = {}".format(a_mod, sign1, b_mod, sign2, c_mod, d)
+        answer = " {} {} {} {} x = {}".format(a, sign1, b, sign2, d)
 
     return answer, x
 
-print(level_3_challenge(1))
+print(level_3_challenge(2))
