@@ -77,24 +77,20 @@ def level_2_challenge_2(level):
 
     if x_place_randomizer == 0:
         x = a
-        a_mod = 'x'
-        b_mod = b
-        c_mod = c
+        answer = " x {} {} = {}".format(sign, b, c)
     elif x_place_randomizer == 1:
         x = b
-        a_mod = a
-        b_mod = 'x'
-        c_mod = c
+        answer = " {} {} x = {}".format(a,sign, c)
     else:
         x = c
-        a_mod = a
-        b_mod = b
-        c_mod = 'x'
+        answer = " {} {} {} = x".format(a, sign, b)
 
-    answer = " {} {} {} = {}".format(a_mod, sign, b_mod, c_mod)
+
+
 
     return answer, x
 
 def level_2_challenge(level):
     return level_2_challenge_2(level) if random.randint(0, 1) else level_2_challenge_1(level)
 
+print(level_2_challenge(2))
