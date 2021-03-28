@@ -2,109 +2,132 @@
    Returns a task in form {"task": "a+(b -X + c) = 6", "result": "x"}
 """
 import random
+from Level_1_challenge_generation import get_limits as get_lim
 
-
-def level_5_challenge():
-    braces_place_randomizer = random.randint(0, 2)
-    three_numbers_in_braces = random.randint(0, 1)
+def level_5_challenge(level):
+    randomizer = random.randint(0, 7)
+    brackets_randomizer = random.randint(0, 2)
     x_place_randomizer = random.randint(0, 3)
+    limits = get_lim(level)
+    min = limits[0]
+    max = limits[1]
 
-    braces_place_randomizer = 1
+    a = random.randint(min, max)
+    b = random.randint(min, max)
+    c = random.randint(min, max)
+    d = random.randint(min, max)
 
-    if braces_place_randomizer == 0:
-        braces1 = "("
-        braces2 = ")"
-        if three_numbers_in_braces == 1:
-            m = random.randint(0, 5)
-            n = random.randint(-5, 5)
-            o = random.randint(-5, 5)
-            if sum((m, n, o)) < 0:
-                if n < 0:
-                    m, n, o = -n, -m, -o
-                elif o < 0:
-                    m, n, o = -o, -n, -m
-            a = m + n + o
-            if n < 0:
-                braces_sign1 = "-"
-            else:
-                braces_sign1 = "+"
-            if o < 0:
-                braces_sign2 = "-"
-            else:
-                braces_sign2 = "+"
+    if randomizer == 0:
+        sign1 = '+'
+        sign2 = '+'
+        sign3 = '+'
+        e = a + b + c + d
+    elif randomizer == 1:
+        sign1 = '+'
+        sign2 = '+'
+        sign3 = '-'
+        e = a + b + c - d
+        if e < 0:
+            e, d = d, -e
+            sign3 = '+'
+    elif randomizer == 2:
+        sign1 = '+'
+        sign2 = '-'
+        sign3 = '+'
+        e = a + b - c + d
+        if e < 0:
+            e, c = c, -e
+            sign2 = '+'
+    elif randomizer == 3:
+        sign1 = '+'
+        sign2 = '-'
+        sign3 = '-'
+        e = a + b - c + d
+        if e < 0:
+            e, c = c, -e
+            sign2 = '+'
+    elif randomizer == 4:
+        sign1 = '-'
+        sign2 = '+'
+        sign3 = '+'
+        e = a - b + c + d
+        if e < 0:
+            e, b = b, -e
+            sign1 = '+'
+    elif randomizer == 5:
+        sign1 = '-'
+        sign2 = '-'
+        sign3 = '+'
+        e = a - b + c + d
+        if e < 0:
+            e, b = b, -e
+            sign1 = '+'
+    elif randomizer == 6:
+        sign1 = '-'
+        sign2 = '+'
+        sign3 = '-'
+        e = a - b + c + d
+        if e < 0:
+            e, b = b, -e
+            sign1 = '+'
+    elif randomizer == 7:
+        sign1 = '-'
+        sign2 = '-'
+        sign3 = '-'
+        e = a - b + c + d
+        if e < 0:
+            e, b = b, -e
+            sign1 = '+'
 
-            a_mod = "({} {} {} {} {})".format(m, braces_sign1, abs(n), braces_sign2, abs(o))
-            b = random.randint(-5, 5)
-            c = 0
-        else:
-            m = random.randint(0, 5)
-            n = random.randint(-5, 5)
-            if sum((m, n)) < 0:
-                m, n = -n, -m
-            a = m + n
-            if n < 0:
-                braces_sign1 = "-"
-            else:
-                braces_sign1 = "+"
+    if x_place_randomizer == 0:
+        x = a
+        a_mod = 'x'
+        b_mod = b
+        c_mod = c
+        d_mod = d
+    elif x_place_randomizer == 1:
+        x = b
+        a_mod = a
+        b_mod = 'x'
+        c_mod = c
+        d_mod = d
+    elif x_place_randomizer == 2:
+        x = c
+        a_mod = a
+        b_mod = b
+        c_mod = 'x'
+        d_mod = d
+    else:
+        x = d
+        a_mod = a
+        b_mod = b
+        c_mod = c
+        d_mod = 'x'
 
-            a_mod = "({} {} {})".format(m, braces_sign1, abs(n))
-            b = random.randint(-5, 5)
-            b = random.randint(-5, 5)
-            c = random.randint(-5, 5)
-    elif braces_place_randomizer == 1:
-        if three_numbers_in_braces == 1:
-            a = random.randint(0, 5)
-            m = random.randint(0, 5)
-            n = random.randint(-5, 5)
-            o = random.randint(-5, 5)
-            b = m + n + o
-            if n < 0:
-                braces_sign1 = "-"
-            else:
-                braces_sign1 = "+"
-            if o < 0:
-                braces_sign2 = "-"
-            else:
-                braces_sign2 = "+"
-            b_mod = "({} {} {} {} {})".format(m, braces_sign1, abs(n), braces_sign2, abs(o))
-            c = 0
-        else:
-            a = random.randint(0, 5)
-            m = random.randint(0, 5)
-            n = random.randint(-5, 5)
-            b = m + n
-            if n < 0:
-                braces_sign1 = "-"
-            else:
-                braces_sign1 = "+"
-            b_mod = "({} {} {})".format(m, braces_sign1, abs(n))
-            c = random.randint(-5, 5)
-    elif braces_place_randomizer == 2:
-        if three_numbers_in_braces == 1:
-            a = random.randint(0, 5)
-            m = random.randint(0, 5)
-            n = random.randint(-5, 5)
-            o = random.randint(-5, 5)
-            o = m + n + o
-            b = 0
-        else:
-            a = random.randint(0, 5)
-            b = random.randint(-5, 5)
-            m = random.randint(0, 5)
-            n = random.randint(-5, 5)
-            c = m + n
+    if brackets_randomizer == 0:
+        answer = " ({} {} {}) {} {} {} {} = {}".format(a_mod, sign1, b_mod, sign2, c_mod, sign3, d_mod, e)
+    elif brackets_randomizer == 1:
+        if sign1 == "-" and sign2 == "+":
+            sign2 = "-"
+
+        answer = " {} {} ({} {} {}) {} {} = {}".format(a_mod, sign1, b_mod, sign2, c_mod, sign3, d_mod, e)
+    elif brackets_randomizer == 2:
+        if sign2 == "-" and sign3 == "+":
+            sign3 = "-"
+
+        answer = " {} {} {} {} ({} {} {}) = {}".format(a_mod, sign1, b_mod, sign2, c_mod, sign3, d_mod, e)
+    elif brackets_randomizer == 3:
+        if sign1 == "-" and sign2 == "+":
+            sign2 = "-"
+        if sign1 == "-" and sign3 == "+":
+            sign3 = "-"
+
+        answer = " {} {} ({} {} {} {} {}) = {}".format(a_mod, sign1, b_mod, sign2, c_mod, sign3, d_mod, e)
+    elif brackets_randomizer == 4:
+
+        answer = " ({} {} {} {} {}) {} {} = {}".format(a_mod, sign1, b_mod, sign2, c_mod, sign3, d_mod, e)
+
+    return answer, x
 
 
-
-
-
-
-    d = a + b + c
-
-
-
-
-    return b_mod, b
-
-
-print(level_5_challenge())
+print(level_5_challenge(5))
