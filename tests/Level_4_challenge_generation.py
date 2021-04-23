@@ -5,23 +5,19 @@ import random
 from Level_1_challenge_generation import get_limits as get_lim
 
 def level_4_challenge(level):
-    randomizer = random.randint(0, 3)
+    randomizer = random.randint(0, 2)
     brackets_randomizer = random.randint(0, 1)
     x_place_randomizer = random.randint(0, 2)
     limits = get_lim(level)
     min = limits[0]
     max = limits[1]
 
-    a = random.randint(min, max)
+    a = 2*random.randint(min, max)
     b = random.randint(min, max)
     c = random.randint(min, max)
 
-    if randomizer == 0:
-        sign1 = '+'
-        sign2 = '+'
-        d = a + b + c
 
-    elif randomizer == 1:
+    if randomizer == 0:
         sign1 = '+'
         sign2 = '-'
         d = a + b - c
@@ -29,7 +25,7 @@ def level_4_challenge(level):
             d, c = c, -d
             sign2 = '+'
 
-    elif randomizer == 2:
+    elif randomizer == 1:
         sign1 = '-'
         sign2 = '+'
         d = a - b + c
@@ -37,7 +33,7 @@ def level_4_challenge(level):
             d, b = b, -d
             sign1 = '+'
 
-    elif randomizer == 3:
+    elif randomizer == 2:
         sign1 = '-'
         sign2 = '-'
         d = a - b - c
@@ -66,7 +62,10 @@ def level_4_challenge(level):
     else:
         if sign1 == "-" and sign2 == "+":
             sign2 = "-"
-
+            print("--")
+        elif sign1 == "-" and sign2 == "-":
+            sign2 = "+"
+            print("-+")
         answer = " {} {} ({} {} {}) = {}".format(a_mod, sign1, b_mod, sign2, c_mod, d)
 
     return answer, x
