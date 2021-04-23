@@ -62,10 +62,10 @@ def level_4_challenge(level):
     else:
         if sign1 == "-" and sign2 == "+":
             sign2 = "-"
-            print("--")
+
         elif sign1 == "-" and sign2 == "-":
             sign2 = "+"
-            print("-+")
+
         answer = " {} {} ({} {} {}) = {}".format(a_mod, sign1, b_mod, sign2, c_mod, d)
 
     return answer, x
