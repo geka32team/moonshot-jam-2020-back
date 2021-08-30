@@ -3,7 +3,7 @@
 """
 
 import random
-from Limits import Limits
+from limits import Limits
 
 class Level1:
     def __init__(self, level):

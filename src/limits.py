@@ -2,7 +2,7 @@
 
 import math
 
-class limits:
+class Limits:
     def __init__(self, lvl):
         self.lvl = lvl
     def get_limits(self):
