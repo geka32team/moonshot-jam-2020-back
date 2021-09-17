@@ -1,4 +1,4 @@
-"""A class generates integer limits based on level using Fibonacci sequence. Limits will be used for integers generation in our math taks"""
+"""A class generates integer limits based on level using Fibonacci sequence. Limits will be used for integers generation in our math tasks"""
 
 import math
 
