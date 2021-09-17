@@ -1,8 +1,8 @@
 """Populate stats table.
 
-Revision ID: b65791a62e04
-Revises: e631352c5582
-Create Date: 2020-11-29 18:22:23.327735
+Revision ID: c9334d3bae92
+Revises: 63dd8a1ce0df
+Create Date: 2020-12-06 19:12:00.336071
 
 """
 from alembic import op
@@ -13,8 +13,8 @@ from src.model.stat import Stat
 
 
 # revision identifiers, used by Alembic.
-revision = 'b65791a62e04'
-down_revision = 'e631352c5582'
+revision = 'c9334d3bae92'
+down_revision = '63dd8a1ce0df'
 branch_labels = None
 depends_on = None
 

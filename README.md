@@ -10,7 +10,7 @@ See [Wiki](https://github.com/geka32team/moonshot-jam-2020-back/wiki)
 
 ## Install
 
-### clone the repository
+### Clone the repository
 
     $ git clone https://github.com/geka32team/moonshot-jam-2020-back
     $ cd moonshot-jam-2020-back

@@ -70,5 +70,4 @@ class TestingConfig(Config):
 
     SOCKETIO_LOGGER = True
 
-    SESSION_TYPE = 'null'
     SESSION_FILE_THRESHOLD = 10

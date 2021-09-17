@@ -1,8 +1,8 @@
 """Add stats table.
 
-Revision ID: e631352c5582
-Revises: f68df277edf0
-Create Date: 2020-11-29 18:08:38.242924
+Revision ID: 63dd8a1ce0df
+Revises: 93be7244a677
+Create Date: 2020-12-06 19:09:38.691381
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e631352c5582'
-down_revision = 'f68df277edf0'
+revision = '63dd8a1ce0df'
+down_revision = '93be7244a677'
 branch_labels = None
 depends_on = None
 
@@ -32,7 +32,7 @@ def upgrade():
                     sa.Column('bosses_defeated', sa.Integer(), nullable=False),
                     sa.Column('user_id', sa.Integer(), nullable=False),
                     sa.ForeignKeyConstraint(
-                        ['user_id'], ['users.id'], ondelete='CASCADE'),
+                        ['user_id'], ['users.id'], name='stats_user_id', ondelete='CASCADE'),
                     sa.PrimaryKeyConstraint('id'),
                     sa.UniqueConstraint('user_id')
                     )

@@ -15,14 +15,14 @@ from . import api
 from . import ws
 
 
-def create_app(test_config=None):
+def create_app(testing_config=None):
     """Create and configure an instance of the Flask application."""
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config=True)
 
-    if app.config["ENV"] == "production":       # pragma: no cover
-        app_config = config.ProductionConfig(app)
-    elif app.config["ENV"] == "testing":        # pragma: no cover
+    if testing_config is not None:              # pragma: no cover
         app_config = config.TestingConfig(app)
+    elif app.config["ENV"] == "production":     # pragma: no cover
+        app_config = config.ProductionConfig(app)
     else:                                       # pragma: no cover
         app_config = config.DevelopmentConfig(app)
 
@@ -42,12 +42,13 @@ def create_app(test_config=None):
         cors_allowed_origins=app.config["CORS_ALLOWED_ORIGINS"],
         cors_credentials=True)
 
-    if test_config is None:
+    if testing_config is None:
         # load the instance config, if it exists, when not testing
         app.config.from_pyfile("config.py", silent=True)
     else:
-        # load the test config if passed in
-        app.config.update(test_config)
+        # load the test config
+        app.config.update(testing_config)
+
 
     # ensure the instance folder exists
     try:
